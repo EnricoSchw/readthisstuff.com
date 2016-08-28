@@ -1,0 +1,25 @@
+$rts-color: #F87217 !default;
+$rts-color-dark: #7e3e0d !default;
+$rts-color-bright: #fad2b7 !default;
+
+//** Global textual link color.
+$link-color: $rts-color !default;
+//** Link hover color set via `darken()` function.
+$link-hover-color: $rts-color !default;
+//** Link hover decoration.
+$link-hover-decoration: underline !default;
+
+$brand-primary: $rts-color !default;
+$brand-danger: #D9230F !default;
+
+$text-color: #000 !default;
+
+$hover-color: #ffffff !default;
+$hover-bg-color: $rts-color !default;
+$focus-color: $rts-color !default;
+
+
+
+
+
+

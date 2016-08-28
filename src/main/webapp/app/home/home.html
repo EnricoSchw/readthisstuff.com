@@ -1,0 +1,29 @@
+<!-- Page Header -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Read this Stuff
+            <small>Write your Message</small>
+        </h1>
+    </div>
+</div>
+<!-- /.row -->
+
+
+<!-- Projects Row -->
+<div ng-repeat="stuffRow in vm.stuffSet" class="row" infinite-scroll="vm.loadPage(vm.page + 1)"
+     infinite-scroll-disabled="vm.page >= vm.links['last']">
+
+    <div ng-repeat="stuff in stuffRow track by stuff.id" class="col-md-4 portfolio-item">
+        <a href="#">
+            <img class="img-responsive" src="content/images/textthumb.png" alt="">
+        </a>
+        <h3>
+            <a href="#">Article Name {{stuff.id}}</a>
+        </h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque
+            urna varius vitae.</p>
+    </div>
+
+</div>
+<!-- /.row -->
+

@@ -1,0 +1,27 @@
+{
+  "relationships": [],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "content",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "type",
+      "fieldType": "ContentType",
+      "fieldValues": "ARTICLE,INTERVIEW,BLOCK",
+      "fieldValidateRules": [
+        "required"
+      ]
+    }
+  ],
+  "changelogDate": "20160803164523",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "content"
+}

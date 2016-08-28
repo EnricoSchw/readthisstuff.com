@@ -1,0 +1,33 @@
+entity Author {
+	firstName String required
+    lastName String required
+	email String required
+    image ImageBlob required
+}
+
+entity Stuff {
+    id String required
+    title String required
+    description String required
+    publicationDate LocalDate required
+    clicks Integer required
+    author String required
+}
+
+entity Content {
+    id String required
+    content String required
+    type ContentType required
+}
+
+enum ContentType {
+    ARTICLE, INTERVIEW, BLOCK
+}
+
+
+paginate Stuff with infinite-scroll
+dto Stuff with mapstruct
+
+
+
+	

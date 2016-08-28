@@ -1,0 +1,26 @@
+{
+    "rtsApp": {
+        "stuff" : {
+            "home": {
+                "title": "Stuffs",
+                "createLabel": "Create a new Stuff",
+                "createOrEditLabel": "Create or edit a Stuff",
+                "search": "Search for Stuff"
+            },
+            "created": "A new Stuff is created with identifier {{ param }}",
+            "updated": "A Stuff is updated with identifier {{ param }}",
+            "deleted": "A Stuff is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Stuff {{ id }}?"
+            },
+            "detail": {
+                "title": "Stuff"
+            },
+            "title": "Title",
+            "description": "Description",
+            "publicationDate": "Publication Date",
+            "clicks": "Clicks",
+            "author": "Author"
+        }
+    }
+}

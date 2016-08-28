@@ -1,0 +1,10 @@
+{
+    "rtsApp": {
+        "ContentType" : {
+            "null": "",
+            "ARTICLE": "ARTICLE",
+            "INTERVIEW": "INTERVIEW",
+            "BLOCK": "BLOCK"
+        }
+    }
+}
