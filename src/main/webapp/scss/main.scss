@@ -418,3 +418,31 @@ Social button
 /* jhipster-needle-scss-add-main JHipster will add new css style */
 
 @import "_custom-sidebar.scss";
+
+nav .container {
+  padding-left: 35px;
+  padding-right: 35px;
+  width: 100%;
+}
+
+.navbar-brand.logo {
+  padding-left: 0px;
+  margin-left: 1px !important;
+}
+
+.navbar-brand.logo:hover {
+  color: $text-color;
+}
+
+.navbar-brand button {
+  display: inline;
+  text-decoration: none;
+}
+
+.navbar-brand button:hover {
+  color: $rts-color;
+}
+
+.navIconDistancer {
+  padding-right: 10px;
+}

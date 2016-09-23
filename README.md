@@ -90,3 +90,6 @@ To setup this project in Jenkins, use the following configuration:
 [Karma]: http://karma-runner.github.io/
 [Jasmine]: http://jasmine.github.io/2.0/introduction.html
 [Protractor]: https://angular.github.io/protractor/
+
+
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome-remote-debugging-port=9222

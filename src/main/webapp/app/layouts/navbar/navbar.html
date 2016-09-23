@@ -7,10 +7,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand logo" href="#/" ng-click="vm.collapseNavbar()">
-                <img class="logo-img" src="content/images/logo.png"/>
+            <div class="navbar-brand logo">
+                <button type="button" ui-sref="#" ng-show="vm.isAuthenticated()" ng-click="vm.toggleMenu()">
+                    <i class="glyphicon glyphicon-menu-hamburger navIconDistancer"></i>
+                </button>
+                <a ui-sref="home"><img class="logo-img" src="content/images/logo.png"/></a>
                 <span translate="global.title">RtS</span> <span class="navbar-version">&beta;</span>
-            </a>
+            </div>
         </div>
         <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
             <ul class="nav navbar-nav navbar-right">
@@ -22,6 +25,7 @@
                 </li>
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
                 <li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" uib-dropdown
+                    has-authority="ROLE_ADMIN"
                     class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">
                         <span>

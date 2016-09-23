@@ -93,7 +93,11 @@ body {
 .sidebar-nav > .sidebar-brand {
   height: 65px;
   font-size: 18px;
+  font-weight: bold;
   line-height: 60px;
+  color: $text-color;
+  padding-left: 18px;
+  padding-top: 20px;
 }
 
 .sidebar-nav > .sidebar-brand a {
@@ -101,8 +105,8 @@ body {
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
-  color: $hover-color;
   background: none;
+  color: $text-color;
 }
 
 @media(min-width: 768px) {
