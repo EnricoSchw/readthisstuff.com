@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span translate="rtsApp.documentRTS.detail.title">Document RTS</span> {{vm.documentRTS.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="rtsApp.documentRTS.title">Title</span></dt>
+        <dd>
+            <span>{{vm.documentRTS.title}}</span>
+        </dd>
+        <dt><span translate="rtsApp.documentRTS.author">Author</span></dt>
+        <dd>
+            <span>{{vm.documentRTS.author}}</span>
+        </dd>
+        <dt><span translate="rtsApp.documentRTS.content">Content</span></dt>
+        <dd>
+            <span>{{vm.documentRTS.content}}</span>
+        </dd>
+        <dt><span translate="rtsApp.documentRTS.type">Type</span></dt>
+        <dd>
+            <span translate="{{'rtsApp.ContentType.' + vm.documentRTS.type}}">{{vm.documentRTS.type}}</span>
+        </dd>
+        <dt><span translate="rtsApp.documentRTS.thump">Thump</span></dt>
+        <dd>
+            <div ng-if="vm.documentRTS.thump">
+                <a ng-click="vm.openFile(vm.documentRTS.thumpContentType, vm.documentRTS.thump)">
+                    <img data-ng-src="{{'data:' + vm.documentRTS.thumpContentType + ';base64,' + vm.documentRTS.thump}}" style="max-width: 100%;"/>
+                </a>
+                {{vm.documentRTS.thumpContentType}}, {{vm.byteSize(vm.documentRTS.thump)}}
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

@@ -1,0 +1,26 @@
+{
+    "rtsApp": {
+        "documentRTS" : {
+            "home": {
+                "title": "Document RTS",
+                "createLabel": "Document RTS erstellen",
+                "createOrEditLabel": "Document RTS erstellen oder bearbeiten",
+                "search": "Suche nach Document RTS"
+            },
+            "created": "Document RTS erstellt mit ID {{ param }}",
+            "updated": "Document RTS aktualisiert mit ID {{ param }}",
+            "deleted": "Document RTS gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Document RTS {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Document RTS"
+            },
+            "title": "Title",
+            "author": "Author",
+            "content": "Content",
+            "type": "Type",
+            "thump": "Thump"
+        }
+    }
+}

@@ -23,6 +23,7 @@
         vm.toggleNavbar = toggleNavbar;
         vm.collapseNavbar = collapseNavbar;
         vm.toggleMenu = toggleMenu;
+        vm.isEditor = isEditor;
         vm.$state = $state;
 
         function login() {
@@ -46,6 +47,10 @@
 
         function toggleMenu() {
             $("#wrapper").toggleClass("toggled");
+        }
+
+        function isEditor() {
+            return $state.includes('document.write');
         }
     }
 })();

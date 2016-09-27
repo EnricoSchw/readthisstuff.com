@@ -11,8 +11,8 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css content/css/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/angular-substance-editor/dist/css/angular-substance-editor.css">
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
+    <link rel="stylesheet" href="bower_components/angular-substance-editor/dist/css/angular-substance-editor.css">
     <!-- endinject -->
     <link rel="stylesheet" href="content/css/vendor.css">
     <!-- endbuild -->
@@ -22,6 +22,7 @@
     <!-- endbuild -->
 
     <style type="text/css">
+
         /**
          * Hide when Angular is not yet loaded and initialized
          */
@@ -39,7 +40,7 @@
 <pag-ribbon></pag-ribbon>
 
 
-<div ui-view="navbar" ng-cloak></div>
+<div class="navbarview" ui-view="navbar" ng-cloak></div>
 <div id="wrapper" ng-class="[!fm.isAuthenticated()? 'toggled' : '']">
 
     <div ui-view="sidebar" ng-cloak ng-show="fm.isAuthenticated()"></div>
@@ -168,6 +169,13 @@
 <script src="app/entities/stuff/stuff.service.js"></script>
 <script src="app/entities/stuff/stuff.controller.js"></script>
 <script src="app/entities/entity.state.js"></script>
+<script src="app/entities/document-rts/document-rts-write.controller.js"></script>
+<script src="app/entities/document-rts/document-rts-dialog.controller.js"></script>
+<script src="app/entities/document-rts/document-rts-detail.controller.js"></script>
+<script src="app/entities/document-rts/document-rts-delete-dialog.controller.js"></script>
+<script src="app/entities/document-rts/document-rts.state.js"></script>
+<script src="app/entities/document-rts/document-rts.service.js"></script>
+<script src="app/entities/document-rts/document-rts.controller.js"></script>
 <script src="app/entities/content/content-write.controller.js"></script>
 <script src="app/entities/content/content-dialog.controller.js"></script>
 <script src="app/entities/content/content-detail.controller.js"></script>
