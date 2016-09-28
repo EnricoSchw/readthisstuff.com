@@ -79,6 +79,40 @@
                     }]
                 }
             })
+            .state('document.stuff', {
+                parent: 'document.write',
+                url: '/stuff',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/entities/document-rts/document-rts-dialog.html',
+                        controller: 'DocumentRTSDialogController',
+                        controllerAs: 'vm',
+                        backdrop: 'static',
+                        size: 'lg',
+                        resolve: {
+                            entity: function () {
+                                return {
+                                    title: null,
+                                    author: null,
+                                    content: null,
+                                    type: null,
+                                    thump: null,
+                                    thumpContentType: null,
+                                    id: null
+                                };
+                            }
+                        }
+                    }).result.then(function () {
+                        $state.go('document.write', null, {reload: true});
+                    }, function () {
+                        $state.go('document.write');
+                    });
+                }]
+
+            })
             .state('document-rts.new', {
                 parent: 'document-rts',
                 url: '/new',

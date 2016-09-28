@@ -32,6 +32,7 @@
                     $translatePartialLoader.addPart('global');
                     $translatePartialLoader.addPart('sidebar');
                     $translatePartialLoader.addPart('content');
+                    $translatePartialLoader.addPart('documentRTS');
                 }]
             }
         });

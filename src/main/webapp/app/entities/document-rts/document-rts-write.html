@@ -24,20 +24,32 @@
 
     .document-rts-stuff {
         height: 40px;
-        width: 200px;
+        min-width: 200px;
         position: relative;
         display: inline;
         margin: 0;
-        padding: 7px;
-        border: 3px solid #F87217;
-        font-size: 14px;
+        padding: 8px;
+        font-size: 16px;
+        font-weight: 400;
+        border: 1px solid #FAD2B7;
+        box-shadow: 1px 1px 1px 0 #faad7c inset;
+        -moz-appearance: textfield;
+        -webkit-appearance: textfield;
+        background-color: white;
+        background-color: -moz-field;
     }
 
-    .document-rts-title {
-        font-weight: bold;
+    .document-rts-stuff:hover,
+    .document-rts-stuff:focus {
+        -moz-appearance: textfield;
+        -webkit-appearance: textfield;
+        background-color: white;
+        background-color: -moz-field;
+        border: 1px solid #99d6ff;
+        box-shadow: 1px 1px 1px 0 #7aa7c7 inset;
     }
-
 
 </style>
+
 <div substance></div>
 

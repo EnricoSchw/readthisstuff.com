@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -7,7 +7,7 @@
 
     DocumentRTSDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'DocumentRTS'];
 
-    function DocumentRTSDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, DocumentRTS) {
+    function DocumentRTSDialogController($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, DocumentRTS) {
         var vm = this;
 
         vm.documentRTS = entity;
@@ -16,15 +16,15 @@
         vm.openFile = DataUtils.openFile;
         vm.save = save;
 
-        $timeout(function (){
+        $timeout(function () {
             angular.element('.form-group:eq(1)>input').focus();
         });
 
-        function clear () {
+        function clear() {
             $uibModalInstance.dismiss('cancel');
         }
 
-        function save () {
+        function save() {
             vm.isSaving = true;
             if (vm.documentRTS.id !== null) {
                 DocumentRTS.update(vm.documentRTS, onSaveSuccess, onSaveError);
@@ -33,13 +33,13 @@
             }
         }
 
-        function onSaveSuccess (result) {
+        function onSaveSuccess(result) {
             $scope.$emit('rtsApp:documentRTSUpdate', result);
             $uibModalInstance.close(result);
             vm.isSaving = false;
         }
 
-        function onSaveError () {
+        function onSaveError() {
             vm.isSaving = false;
         }
 
@@ -49,8 +49,8 @@
                 return;
             }
             if ($file) {
-                DataUtils.toBase64($file, function(base64Data) {
-                    $scope.$apply(function() {
+                DataUtils.toBase64($file, function (base64Data) {
+                    $scope.$apply(function () {
                         documentRTS.thump = base64Data;
                         documentRTS.thumpContentType = $file.type;
                     });
