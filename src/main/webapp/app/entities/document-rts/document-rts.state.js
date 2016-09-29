@@ -87,8 +87,8 @@
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                     $uibModal.open({
-                        templateUrl: 'app/entities/document-rts/document-rts-dialog.html',
-                        controller: 'DocumentRTSDialogController',
+                        templateUrl: 'app/entities/document-rts/document-rts-stuff-dialog.html',
+                        controller: 'DocumentRTSStuffDialogController',
                         controllerAs: 'vm',
                         backdrop: 'static',
                         size: 'lg',
