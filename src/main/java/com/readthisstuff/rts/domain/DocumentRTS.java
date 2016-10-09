@@ -1,14 +1,14 @@
 package com.readthisstuff.rts.domain;
 
+import com.readthisstuff.rts.domain.enumeration.ContentType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.readthisstuff.rts.domain.enumeration.ContentType;
+import java.util.Set;
 
 /**
  * A DocumentRTS.
@@ -22,23 +22,23 @@ public class DocumentRTS implements Serializable {
     @Id
     private String id;
 
-    @NotNull
+    //NotNull
     @Field("title")
     private String title;
 
-    @NotNull
+    //NotNull
     @Field("author")
     private String author;
 
     @NotNull
     @Field("content")
-    private String content;
+    private Set<Content> content;
 
-    @NotNull
+    //NotNull
     @Field("type")
     private ContentType type;
 
-    @NotNull
+    //NotNull
     @Field("thump")
     private byte[] thump;
 
@@ -69,11 +69,11 @@ public class DocumentRTS implements Serializable {
         this.author = author;
     }
 
-    public String getContent() {
+    public Set<Content> getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(Set<Content> content) {
         this.content = content;
     }
 
@@ -110,7 +110,7 @@ public class DocumentRTS implements Serializable {
             return false;
         }
         DocumentRTS documentRTS = (DocumentRTS) o;
-        if(documentRTS.id == null || id == null) {
+        if (documentRTS.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, documentRTS.id);
@@ -124,13 +124,13 @@ public class DocumentRTS implements Serializable {
     @Override
     public String toString() {
         return "DocumentRTS{" +
-            "id=" + id +
-            ", title='" + title + "'" +
-            ", author='" + author + "'" +
-            ", content='" + content + "'" +
-            ", type='" + type + "'" +
-            ", thump='" + thump + "'" +
-            ", thumpContentType='" + thumpContentType + "'" +
-            '}';
+                "id=" + id +
+                ", title='" + title + "'" +
+                ", author='" + author + "'" +
+                ", content='" + content + "'" +
+                ", type='" + type + "'" +
+                ", thump='" + thump + "'" +
+                ", thumpContentType='" + thumpContentType + "'" +
+                '}';
     }
 }
