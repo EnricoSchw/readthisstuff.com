@@ -17,9 +17,8 @@
         </div>
 
 
-
         <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
-        <div ng-if="vm.isEditor()" ng-include="'/app/entities/document-rts/document-rts-stuff.html'"></div>
+            <div ui-view="documentrts"></div>
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active">
                     <a ui-sref="home" ng-click="vm.collapseNavbar()">

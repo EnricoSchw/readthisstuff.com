@@ -19,14 +19,20 @@
         }
 
         function handleSaveEvent(content) {
-            vm.isSaving = true;
-            vm.documentRTS.content = content;
-            if (vm.documentRTS.id !== null) {
-                DocumentRTS.update(vm.documentRTS, onSaveSuccess, onSaveError);
-            } else {
-                DocumentRTS.save(vm.documentRTS, onSaveSuccess, onSaveError);
-            }
+            console.log(vm.documentRTS.title);
+            // vm.isSaving = true;
+            // vm.documentRTS.content = content;
+            // if (vm.documentRTS.id !== null) {
+            //     DocumentRTS.update(vm.documentRTS, onSaveSuccess, onSaveError);
+            // } else {
+            //     DocumentRTS.save(vm.documentRTS, onSaveSuccess, onSaveError);
+            // }
         }
+
+        $scope.$on('rts-change-documentRTS-title', function (event, data) {
+            vm.documentRTS.title = data.title;
+        });
+
 
         function onSaveSuccess(result) {
             $scope.$emit('rtsApp:documentRTSUpdate', result);

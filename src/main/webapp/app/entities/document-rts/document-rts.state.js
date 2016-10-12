@@ -69,12 +69,18 @@
                         templateUrl: 'app/entities/document-rts/document-rts-write.html',
                         controller: 'DocumentRTSWriteController',
                         controllerAs: 'vm'
+                    },
+                    'documentrts@app': {
+                        templateUrl: 'app/entities/document-rts/document-rts-stuff.html',
+                        controller: 'DocumentRTSStuffController',
+                        controllerAs: 'vm'
                     }
+
                 },
                 resolve: {
                     entity: function () {
                         return {
-                            title: null,
+                            title: "Unknown Title",
                             author: null,
                             content: [
                                 {
