@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -29,10 +29,10 @@ public class Author implements Serializable {
     private String lastName;
 
     @NotNull
-    @Field("email")
-    private String email;
+    @Field("user_name")
+    private String userName;
 
-    @NotNull
+
     @Field("image")
     private byte[] image;
 
@@ -63,12 +63,12 @@ public class Author implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public byte[] getImage() {
@@ -96,7 +96,7 @@ public class Author implements Serializable {
             return false;
         }
         Author author = (Author) o;
-        if(author.id == null || id == null) {
+        if (author.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, author.id);
@@ -110,12 +110,12 @@ public class Author implements Serializable {
     @Override
     public String toString() {
         return "Author{" +
-            "id=" + id +
-            ", firstName='" + firstName + "'" +
-            ", lastName='" + lastName + "'" +
-            ", email='" + email + "'" +
-            ", image='" + image + "'" +
-            ", imageContentType='" + imageContentType + "'" +
-            '}';
+                "id=" + id +
+                ", firstName='" + firstName + "'" +
+                ", lastName='" + lastName + "'" +
+                ", email='" + userName + "'" +
+                ", image='" + image + "'" +
+                ", imageContentType='" + imageContentType + "'" +
+                '}';
     }
 }

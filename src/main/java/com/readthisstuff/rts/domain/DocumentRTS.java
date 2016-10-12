@@ -28,7 +28,7 @@ public class DocumentRTS implements Serializable {
 
     //NotNull
     @Field("author")
-    private String author;
+    private Author author;
 
     @NotNull
     @Field("content")
@@ -61,11 +61,11 @@ public class DocumentRTS implements Serializable {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 

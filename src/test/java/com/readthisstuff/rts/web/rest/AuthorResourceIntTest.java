@@ -82,7 +82,7 @@ public class AuthorResourceIntTest {
         author = new Author();
         author.setFirstName(DEFAULT_FIRST_NAME);
         author.setLastName(DEFAULT_LAST_NAME);
-        author.setEmail(DEFAULT_EMAIL);
+        author.setUserName(DEFAULT_EMAIL);
         author.setImage(DEFAULT_IMAGE);
         author.setImageContentType(DEFAULT_IMAGE_CONTENT_TYPE);
     }
@@ -147,7 +147,7 @@ public class AuthorResourceIntTest {
     public void checkEmailIsRequired() throws Exception {
         int databaseSizeBeforeTest = authorRepository.findAll().size();
         // set the field null
-        author.setEmail(null);
+        author.setUserName(null);
 
         // Create the Author, which fails.
 
@@ -229,7 +229,7 @@ public class AuthorResourceIntTest {
         updatedAuthor.setId(author.getId());
         updatedAuthor.setFirstName(UPDATED_FIRST_NAME);
         updatedAuthor.setLastName(UPDATED_LAST_NAME);
-        updatedAuthor.setEmail(UPDATED_EMAIL);
+        updatedAuthor.setUserName(UPDATED_EMAIL);
         updatedAuthor.setImage(UPDATED_IMAGE);
         updatedAuthor.setImageContentType(UPDATED_IMAGE_CONTENT_TYPE);
 
@@ -244,7 +244,7 @@ public class AuthorResourceIntTest {
         Author testAuthor = authors.get(authors.size() - 1);
         assertThat(testAuthor.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
         assertThat(testAuthor.getLastName()).isEqualTo(UPDATED_LAST_NAME);
-        assertThat(testAuthor.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testAuthor.getUserName()).isEqualTo(UPDATED_EMAIL);
         assertThat(testAuthor.getImage()).isEqualTo(UPDATED_IMAGE);
         assertThat(testAuthor.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
     }

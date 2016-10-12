@@ -1,19 +1,21 @@
 package com.readthisstuff.rts.web.rest;
 
+import com.google.common.collect.Sets;
 import com.readthisstuff.rts.RtsApp;
+import com.readthisstuff.rts.domain.Author;
+import com.readthisstuff.rts.domain.Content;
 import com.readthisstuff.rts.domain.DocumentRTS;
+import com.readthisstuff.rts.domain.enumeration.ContentType;
 import com.readthisstuff.rts.repository.DocumentRTSRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -24,12 +26,12 @@ import org.springframework.util.Base64Utils;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.readthisstuff.rts.domain.enumeration.ContentType;
 
 /**
  * Test class for the DocumentRTSResource REST controller.
@@ -44,10 +46,11 @@ public class DocumentRTSResourceIntTest {
 
     private static final String DEFAULT_TITLE = "AAAAA";
     private static final String UPDATED_TITLE = "BBBBB";
-    private static final String DEFAULT_AUTHOR = "AAAAA";
-    private static final String UPDATED_AUTHOR = "BBBBB";
-    private static final String DEFAULT_CONTENT = "AAAAA";
-    private static final String UPDATED_CONTENT = "BBBBB";
+    private static final Author DEFAULT_AUTHOR = new Author();
+    private static final Author UPDATED_AUTHOR = new Author();
+    private static final Set<Content> DEFAULT_CONTENT = Sets.newHashSet(new Content());
+    private static final Set<Content> UPDATED_CONTENT = Sets.newHashSet(new Content());
+    ;
 
     private static final ContentType DEFAULT_TYPE = ContentType.ARTICLE;
     private static final ContentType UPDATED_TYPE = ContentType.INTERVIEW;
@@ -76,8 +79,8 @@ public class DocumentRTSResourceIntTest {
         DocumentRTSResource documentRTSResource = new DocumentRTSResource();
         ReflectionTestUtils.setField(documentRTSResource, "documentRTSRepository", documentRTSRepository);
         this.restDocumentRTSMockMvc = MockMvcBuilders.standaloneSetup(documentRTSResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setMessageConverters(jacksonMessageConverter).build();
+                .setCustomArgumentResolvers(pageableArgumentResolver)
+                .setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
@@ -225,15 +228,15 @@ public class DocumentRTSResourceIntTest {
 
         // Get the documentRTS
         restDocumentRTSMockMvc.perform(get("/api/document-rts/{id}", documentRTS.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.id").value(documentRTS.getId()))
-            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
-            .andExpect(jsonPath("$.author").value(DEFAULT_AUTHOR.toString()))
-            .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT.toString()))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
-            .andExpect(jsonPath("$.thumpContentType").value(DEFAULT_THUMP_CONTENT_TYPE))
-            .andExpect(jsonPath("$.thump").value(Base64Utils.encodeToString(DEFAULT_THUMP)));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(documentRTS.getId()))
+                .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
+                .andExpect(jsonPath("$.author").value(DEFAULT_AUTHOR.toString()))
+                .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT.toString()))
+                .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
+                .andExpect(jsonPath("$.thumpContentType").value(DEFAULT_THUMP_CONTENT_TYPE))
+                .andExpect(jsonPath("$.thump").value(Base64Utils.encodeToString(DEFAULT_THUMP)));
     }
 
     @Test

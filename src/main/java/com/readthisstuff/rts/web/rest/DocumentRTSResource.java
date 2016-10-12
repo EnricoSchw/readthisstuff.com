@@ -1,12 +1,13 @@
 package com.readthisstuff.rts.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.readthisstuff.rts.domain.Author;
 import com.readthisstuff.rts.domain.DocumentRTS;
 import com.readthisstuff.rts.repository.DocumentRTSRepository;
+import com.readthisstuff.rts.service.AuthorService;
 import com.readthisstuff.rts.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +28,14 @@ import java.util.Optional;
 public class DocumentRTSResource {
 
     private final Logger log = LoggerFactory.getLogger(DocumentRTSResource.class);
-        
+
     @Inject
     private DocumentRTSRepository documentRTSRepository;
-    
+
+    @Inject
+    private AuthorService authorService;
+
+
     /**
      * POST  /document-rts : Create a new documentRTS.
      *
@@ -39,18 +44,21 @@ public class DocumentRTSResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @RequestMapping(value = "/document-rts",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<DocumentRTS> createDocumentRTS(@Valid @RequestBody DocumentRTS documentRTS) throws URISyntaxException {
         log.debug("REST request to save DocumentRTS : {}", documentRTS);
         if (documentRTS.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("documentRTS", "idexists", "A new documentRTS cannot already have an ID")).body(null);
         }
+
+        Author author = authorService.createCurrentUserAsAuthor();
+        documentRTS.setAuthor(author);
         DocumentRTS result = documentRTSRepository.save(documentRTS);
         return ResponseEntity.created(new URI("/api/document-rts/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("documentRTS", result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert("documentRTS", result.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -63,8 +71,8 @@ public class DocumentRTSResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @RequestMapping(value = "/document-rts",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<DocumentRTS> updateDocumentRTS(@Valid @RequestBody DocumentRTS documentRTS) throws URISyntaxException {
         log.debug("REST request to update DocumentRTS : {}", documentRTS);
@@ -73,8 +81,8 @@ public class DocumentRTSResource {
         }
         DocumentRTS result = documentRTSRepository.save(documentRTS);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("documentRTS", documentRTS.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert("documentRTS", documentRTS.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -83,8 +91,8 @@ public class DocumentRTSResource {
      * @return the ResponseEntity with status 200 (OK) and the list of documentRTS in body
      */
     @RequestMapping(value = "/document-rts",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public List<DocumentRTS> getAllDocumentRTS() {
         log.debug("REST request to get all DocumentRTS");
@@ -99,17 +107,17 @@ public class DocumentRTSResource {
      * @return the ResponseEntity with status 200 (OK) and with body the documentRTS, or with status 404 (Not Found)
      */
     @RequestMapping(value = "/document-rts/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<DocumentRTS> getDocumentRTS(@PathVariable String id) {
         log.debug("REST request to get DocumentRTS : {}", id);
         DocumentRTS documentRTS = documentRTSRepository.findOne(id);
         return Optional.ofNullable(documentRTS)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .map(result -> new ResponseEntity<>(
+                        result,
+                        HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -119,8 +127,8 @@ public class DocumentRTSResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @RequestMapping(value = "/document-rts/{id}",
-        method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Void> deleteDocumentRTS(@PathVariable String id) {
         log.debug("REST request to delete DocumentRTS : {}", id);
