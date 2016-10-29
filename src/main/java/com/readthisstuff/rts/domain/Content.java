@@ -4,11 +4,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.readthisstuff.rts.domain.enumeration.ContentType;
 
 /**
  * A Content.
@@ -28,7 +26,7 @@ public class Content implements Serializable {
 
     @NotNull
     @Field("type")
-    private ContentType type;
+    private String type;
 
     public String getId() {
         return id;
@@ -46,11 +44,11 @@ public class Content implements Serializable {
         this.content = content;
     }
 
-    public ContentType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(ContentType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -63,7 +61,7 @@ public class Content implements Serializable {
             return false;
         }
         Content content = (Content) o;
-        if(content.id == null || id == null) {
+        if (content.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, content.id);
@@ -77,9 +75,9 @@ public class Content implements Serializable {
     @Override
     public String toString() {
         return "Content{" +
-            "id=" + id +
-            ", content='" + content + "'" +
-            ", type='" + type + "'" +
-            '}';
+                "id=" + id +
+                ", content='" + content + "'" +
+                ", type='" + type + "'" +
+                '}';
     }
 }

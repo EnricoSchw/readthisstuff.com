@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -7,13 +7,13 @@
 
     NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', 'LoginService'];
 
-    function NavbarController ($state, Auth, Principal, ProfileService, LoginService) {
+    function NavbarController($state, Auth, Principal, ProfileService, LoginService) {
         var vm = this;
 
         vm.isNavbarCollapsed = true;
         vm.isAuthenticated = Principal.isAuthenticated;
 
-        ProfileService.getProfileInfo().then(function(response) {
+        ProfileService.getProfileInfo().then(function (response) {
             vm.inProduction = response.inProduction;
             vm.swaggerDisabled = response.swaggerDisabled;
         });
@@ -22,6 +22,8 @@
         vm.logout = logout;
         vm.toggleNavbar = toggleNavbar;
         vm.collapseNavbar = collapseNavbar;
+        vm.toggleMenu = toggleMenu;
+        vm.isEditor = isEditor;
         vm.$state = $state;
 
         function login() {
@@ -41,6 +43,14 @@
 
         function collapseNavbar() {
             vm.isNavbarCollapsed = true;
+        }
+
+        function toggleMenu() {
+            $("#wrapper").toggleClass("toggled");
+        }
+
+        function isEditor() {
+            return $state.includes('document.write');
         }
     }
 })();

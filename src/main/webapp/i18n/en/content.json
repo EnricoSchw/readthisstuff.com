@@ -1,22 +1,26 @@
 {
     "rtsApp": {
-        "content" : {
+        "content": {
             "home": {
-                "title": "Contents",
-                "createLabel": "Create a new Content",
+                "title": "Documents",
+                "createLabel": "Create a new Document",
                 "createOrEditLabel": "Create or edit a Content",
                 "search": "Search for Content"
             },
-            "created": "A new Content is created with identifier {{ param }}",
-            "updated": "A Content is updated with identifier {{ param }}",
-            "deleted": "A Content is deleted with identifier {{ param }}",
+            "sidebar": {
+                "createLabel": "New Document",
+                "listLabel": "My Documents"
+            },
+            "created": "A new Document is created with identifier {{ param }}",
+            "updated": "A Document is updated with identifier {{ param }}",
+            "deleted": "A Document is deleted with identifier {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Content {{ id }}?"
+                "question": "Are you sure you want to delete Document {{ id }}?"
             },
             "detail": {
-                "title": "Content"
+                "title": "Document"
             },
-            "content": "Content",
+            "content": "Document",
             "type": "Type"
         }
     }

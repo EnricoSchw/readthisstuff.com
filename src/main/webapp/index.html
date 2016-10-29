@@ -7,10 +7,12 @@
     <meta name="description" content="">
     <meta name="google" value="notranslate">
     <meta name="viewport" content="width=device-width">
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css content/css/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
+    <link rel="stylesheet" href="bower_components/angular-substance-editor/dist/css/angular-substance-editor.css">
     <!-- endinject -->
     <link rel="stylesheet" href="content/css/vendor.css">
     <!-- endbuild -->
@@ -20,6 +22,7 @@
     <!-- endbuild -->
 
     <style type="text/css">
+
         /**
          * Hide when Angular is not yet loaded and initialized
          */
@@ -34,13 +37,13 @@
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>
 <![endif]-->
-<page-ribbon></page-ribbon>
+<pag-ribbon></pag-ribbon>
 
 
-<div ui-view="navbar" ng-cloak></div>
-<div id="wrapper" ng-show="fm.isAuthenticated()">
+<div class="navbarview" ui-view="navbar" ng-cloak></div>
+<div id="wrapper" ng-class="[!fm.isAuthenticated()? 'toggled' : '']">
 
-    <div ui-view="sidebar" ng-cloak></div>
+    <div ui-view="sidebar" ng-cloak ng-show="fm.isAuthenticated()"></div>
 
     <!-- Page Content -->
     <div id="page-content-wrapper" ng-cloak>
@@ -70,33 +73,24 @@
 </div>
 
 
-<div class="container" ng-hide="fm.isAuthenticated()">
+<!--<div class="container" ng-hide="fm.isAuthenticated()">
     <div class="well" ui-view="content" ng-cloak>
-        <!-- Angular views -->
+
     </div>
 
     <hr>
 
-    <!-- Footer -->
+
     <footer ng-cloak="">
         <div class="row">
             <div class="col-lg-12">
                 <p>Copyright &copy; Enfaba UG 2016</p>
             </div>
         </div>
-        <!-- /.row -->
+
     </footer>
 
-</div>
-
-
-<!-- Menu Toggle Script -->
-<script>
-    $("#menu-toggle").click(function (e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-</script>
+</div> -->
 
 
 <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
@@ -135,6 +129,7 @@
 <script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.js"></script>
 <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
 <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+<script src="bower_components/angular-substance-editor/dist/angular-substance-editor.js"></script>
 <!-- endinject -->
 <!-- endbuild -->
 
@@ -144,6 +139,7 @@
 <script src="app/services/user/user.service.js"></script>
 <script src="app/services/profiles/profile.service.js"></script>
 <script src="app/services/profiles/page-ribbon.directive.js"></script>
+<script src="app/services/editor/substance.service.js"></script>
 <script src="app/services/auth/sessions.service.js"></script>
 <script src="app/services/auth/register.service.js"></script>
 <script src="app/services/auth/principal.service.js"></script>
@@ -173,6 +169,18 @@
 <script src="app/entities/stuff/stuff.service.js"></script>
 <script src="app/entities/stuff/stuff.controller.js"></script>
 <script src="app/entities/entity.state.js"></script>
+<script src="app/entities/document-rts/document-rts-write.controller.js"></script>
+<script src="app/entities/document-rts/document-rts-sync.directive.js"></script>
+<script src="app/entities/document-rts/document-rts-stuff-dialog.controller.js"></script>
+<script src="app/entities/document-rts/document-rts-stuff.controller.js"></script>
+<script src="app/entities/document-rts/document-rts-dialog.controller.js"></script>
+<script src="app/entities/document-rts/document-rts-detail.controller.js"></script>
+<script src="app/entities/document-rts/document-rts-depositary.service.js"></script>
+<script src="app/entities/document-rts/document-rts-delete-dialog.controller.js"></script>
+<script src="app/entities/document-rts/document-rts.state.js"></script>
+<script src="app/entities/document-rts/document-rts.service.js"></script>
+<script src="app/entities/document-rts/document-rts.controller.js"></script>
+<script src="app/entities/content/content-write.controller.js"></script>
 <script src="app/entities/content/content-dialog.controller.js"></script>
 <script src="app/entities/content/content-detail.controller.js"></script>
 <script src="app/entities/content/content-delete-dialog.controller.js"></script>
@@ -276,6 +284,5 @@
 <script src="app/account/account.state.js"></script>
 <!-- endinject -->
 <!-- endbuild -->
-
 </body>
 </html>
