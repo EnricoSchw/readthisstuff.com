@@ -5,34 +5,30 @@
         .module('rtsApp')
         .controller('DocumentRTSWriteController', DocumentRTSWriteController);
 
-    DocumentRTSWriteController.$inject = ['$scope', '$state', 'entity', 'DocumentRTS', 'SubstanceService'];
+    DocumentRTSWriteController.$inject = ['$scope', '$rootScope', 'entity', 'DocumentRTS', 'SubstanceService', 'DocumentRTSDepositary'];
 
-    function DocumentRTSWriteController($scope, $state, entity, DocumentRTS, substanceService) {
+    function DocumentRTSWriteController($scope, $rootScope, entity, DocumentRTS, substanceService, documentRTSDepositary) {
         var vm = this;
-        vm.documentRTS = entity;
+        documentRTSDepositary.setDocument(entity);
 
-        loadAll();
+        startEditor();
 
-        function loadAll() {
-            substanceService.setDocument(vm.documentRTS.content);
+        function startEditor() {
+            substanceService.setDocument(documentRTSDepositary.getContent());
             substanceService.setSaveHandler(handleSaveEvent);
         }
 
         function handleSaveEvent(content) {
-            console.log(vm.documentRTS.title);
-            // vm.isSaving = true;
-            // vm.documentRTS.content = content;
-            // if (vm.documentRTS.id !== null) {
-            //     DocumentRTS.update(vm.documentRTS, onSaveSuccess, onSaveError);
-            // } else {
-            //     DocumentRTS.save(vm.documentRTS, onSaveSuccess, onSaveError);
-            // }
+            vm.isSaving = true;
+            documentRTSDepositary.setContent(content);
+            var document = documentRTSDepositary.getDocument();
+
+            if (document.id !== null) {
+                DocumentRTS.update(document, onSaveSuccess, onSaveError);
+            } else {
+                DocumentRTS.save(document, onSaveSuccess, onSaveError);
+            }
         }
-
-        $scope.$on('rts-change-documentRTS-title', function (event, data) {
-            vm.documentRTS.title = data.title;
-        });
-
 
         function onSaveSuccess(result) {
             $scope.$emit('rtsApp:documentRTSUpdate', result);
@@ -42,5 +38,14 @@
         function onSaveError() {
             vm.isSaving = false;
         }
+
+        $scope.$on('rts-change-documentRTS-title', function (event, data) {
+            documentRTSDepositary.setTitle(data.title);
+        });
+
+        $rootScope.$on('rtsApp:documentRTSUpdate', function (event, result) {
+            documentRTSDepositary.setDocument(result);
+        });
+
     }
 })();

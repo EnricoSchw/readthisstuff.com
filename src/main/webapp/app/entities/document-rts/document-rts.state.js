@@ -82,16 +82,7 @@
                         return {
                             title: "Unknown Title",
                             author: null,
-                            content: [
-                                {
-                                    id: "p1",
-                                    type: "paragraph",
-                                    content: "Insert a new image using the image tool."
-                                }, {
-                                    id: "p2",
-                                    type: "paragraph",
-                                    content: "Please note that images are not actually uploaded in this example. You would need to provide a custom file client that talks to an image store. See FileClientStub which reveals the API you have to implement."
-                                }],
+                            content: [],
                             type: null,
                             thump: null,
                             thumpContentType: null,
@@ -119,20 +110,12 @@
                         backdrop: 'static',
                         size: 'lg',
                         resolve: {
-                            entity: function () {
-                                return {
-                                    title: null,
-                                    author: null,
-                                    content: null,
-                                    type: null,
-                                    thump: null,
-                                    thumpContentType: null,
-                                    id: null
-                                };
-                            }
+                            entity: ['DocumentRTSDepositary', function (documentRTSDepositary) {
+                                return documentRTSDepositary.getDocument();
+                            }]
                         }
                     }).result.then(function () {
-                        $state.go('document.write', null, {reload: true});
+                        $state.go('document.write');
                     }, function () {
                         $state.go('document.write');
                     });

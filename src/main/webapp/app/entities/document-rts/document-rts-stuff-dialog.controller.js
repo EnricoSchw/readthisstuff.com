@@ -5,10 +5,11 @@
         .module('rtsApp')
         .controller('DocumentRTSStuffDialogController', DocumentRTSStuffDialogController);
 
-    DocumentRTSStuffDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'DocumentRTS'];
+    DocumentRTSStuffDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'DocumentRTS', 'DocumentRTSDepositary'];
 
-    function DocumentRTSStuffDialogController($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, DocumentRTS) {
+    function DocumentRTSStuffDialogController($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, DocumentRTS, documentRTSDepositary) {
         var vm = this;
+        var originalTitle = entity.title;
 
         vm.documentRTS = entity;
         vm.clear = clear;
@@ -21,6 +22,7 @@
         });
 
         function clear() {
+            vm.documentRTS.title = originalTitle;
             $uibModalInstance.dismiss('cancel');
         }
 
