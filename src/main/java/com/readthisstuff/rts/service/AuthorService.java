@@ -21,20 +21,32 @@ public class AuthorService {
 
     public Author createCurrentUserAsAuthor() {
         String userName = SecurityUtils.getCurrentUserLogin();
-        Optional<User> user = userRepository.findOneByLogin(userName);
-        return userAsAuthor(user);
-    }
+        Optional<User> userOptional = userRepository.findOneByLogin(userName);
 
-    private Author userAsAuthor(Optional<User> userOptional) {
         if (userOptional.isPresent()) {
-            Author author = new Author();
             User user = userOptional.get();
-            author.setFirstName(user.getFirstName());
-            author.setLastName(user.getLastName());
-            author.setUserName(user.getLogin());
-            return authorRepository.save(author);
+            return userAsAuthor(user);
         } else {
             throw new IllegalStateException("Can not find logged in User to create Author! ");
         }
     }
+
+    private Author userAsAuthor(User user) {
+        Optional<Author> authorOptional = authorRepository.findOneByUserName(user.getLogin());
+        if (authorOptional.isPresent()) {
+            return authorOptional.get();
+        } else {
+            return createAuthor(user);
+        }
+    }
+
+    private Author createAuthor(User user) {
+        Author author = new Author();
+        author.setFirstName(user.getFirstName());
+        author.setLastName(user.getLastName());
+        author.setUserName(user.getLogin());
+        return authorRepository.save(author);
+    }
+
+
 }

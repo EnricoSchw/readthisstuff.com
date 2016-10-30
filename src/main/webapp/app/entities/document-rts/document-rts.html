@@ -4,9 +4,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="document.write" >
+                <button class="btn btn-primary" ui-sref="document.write">
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span  translate="rtsApp.documentRTS.home.createLabel">
+                    <span translate="rtsApp.documentRTS.home.createLabel">
                         Create new Document RTS
                     </span>
                 </button>
@@ -17,52 +17,51 @@
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
-                <tr>
-                    <th><span translate="global.field.id">ID</span></th>
-                    <th><span translate="rtsApp.documentRTS.title">Title</span></th>
-                    <th><span translate="rtsApp.documentRTS.author">Author</span></th>
-                    <th><span translate="rtsApp.documentRTS.content">Content</span></th>
-                    <th><span translate="rtsApp.documentRTS.type">Type</span></th>
-                    <th><span translate="rtsApp.documentRTS.thump">Thump</span></th>
-                    <th></th>
-                </tr>
+            <tr>
+                <th><span translate="rtsApp.documentRTS.thump">Thump</span></th>
+                <th><span translate="rtsApp.documentRTS.title">Title</span></th>
+                <th><span translate="rtsApp.documentRTS.author">Author</span></th>
+                <th></th>
+            </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="documentRTS in vm.documentRTS track by documentRTS.id">
-                    <td><a ui-sref="document-rts-detail({id:documentRTS.id})">{{documentRTS.id}}</a></td>
-                    <td>{{documentRTS.title}}</td>
-                    <td>{{documentRTS.author}}</td>
-                    <td>{{documentRTS.content}}</td>
-                    <td translate="{{'rtsApp.ContentType.' + documentRTS.type}}">{{documentRTS.type}}</td>
-                    <td>
-                        <a ng-if="documentRTS.thump" ng-click="vm.openFile(documentRTS.thumpContentType, documentRTS.thump)">
-                            <img data-ng-src="{{'data:' + documentRTS.thumpContentType + ';base64,' + documentRTS.thump}}" style="max-height: 30px;"/>
-                        </a>
-                        <span ng-if="documentRTS.thump">{{documentRTS.thumpContentType}}, {{vm.byteSize(documentRTS.thump)}}</span>
-                    </td>
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
-                            <button type="submit"
-                                    ui-sref="document-rts-detail({id:documentRTS.id})"
-                                    class="btn btn-info btn-sm">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="document.edit({id:documentRTS.id})"
-                                    class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="document.delete({id:documentRTS.id})"
-                                    class="btn btn-danger btn-sm">
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+            <tr ng-repeat="documentRTS in vm.documentRTS track by documentRTS.id">
+
+                <td>
+                    <a ng-if="documentRTS.thump"
+                       ng-click="vm.openFile(documentRTS.thumpContentType, documentRTS.thump)">
+                        <img data-ng-src="{{'data:' + documentRTS.thumpContentType + ';base64,' + documentRTS.thump}}"
+                             style="max-height: 30px;"/>
+                    </a>
+                    <span ng-if="documentRTS.thump">{{documentRTS.thumpContentType}}, {{vm.byteSize(documentRTS.thump)}}</span>
+                </td>
+
+                <td>{{documentRTS.title}}</td>
+                <td>{{documentRTS.author.userName}}</td>
+
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                ui-sref="document-rts-detail({id:documentRTS.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                            <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="document.edit({id:documentRTS.id})"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="document.delete({id:documentRTS.id})"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                            <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
