@@ -6,10 +6,13 @@ import com.readthisstuff.rts.domain.Author;
 import com.readthisstuff.rts.domain.Content;
 import com.readthisstuff.rts.domain.DocumentRTS;
 import com.readthisstuff.rts.domain.enumeration.ContentType;
+import com.readthisstuff.rts.repository.AuthorRepository;
 import com.readthisstuff.rts.repository.DocumentRTSRepository;
+import com.readthisstuff.rts.service.AuthorService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -30,6 +33,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -46,6 +50,8 @@ public class DocumentRTSResourceIntTest {
 
     private static final String DEFAULT_TITLE = "AAAAA";
     private static final String UPDATED_TITLE = "BBBBB";
+    private static final String DEFAULT_AUTHOR_NAME = "DEFAULT_AUTHOR_NAME";
+
     private static final Author DEFAULT_AUTHOR = new Author();
     private static final Author UPDATED_AUTHOR = new Author();
     private static final Set<Content> DEFAULT_CONTENT = Sets.newHashSet(new Content());
@@ -64,6 +70,12 @@ public class DocumentRTSResourceIntTest {
     private DocumentRTSRepository documentRTSRepository;
 
     @Inject
+    private AuthorRepository authorRepository;
+
+    @Mock
+    private AuthorService mockAuthorService;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
@@ -77,7 +89,11 @@ public class DocumentRTSResourceIntTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         DocumentRTSResource documentRTSResource = new DocumentRTSResource();
+
         ReflectionTestUtils.setField(documentRTSResource, "documentRTSRepository", documentRTSRepository);
+        ReflectionTestUtils.setField(documentRTSResource, "authorService", mockAuthorService);
+
+
         this.restDocumentRTSMockMvc = MockMvcBuilders.standaloneSetup(documentRTSResource)
                 .setCustomArgumentResolvers(pageableArgumentResolver)
                 .setMessageConverters(jacksonMessageConverter).build();
@@ -85,14 +101,18 @@ public class DocumentRTSResourceIntTest {
 
     @Before
     public void initTest() {
+        authorRepository.deleteAll();
         documentRTSRepository.deleteAll();
         documentRTS = new DocumentRTS();
         documentRTS.setTitle(DEFAULT_TITLE);
-        documentRTS.setAuthor(DEFAULT_AUTHOR);
+
         documentRTS.setContent(DEFAULT_CONTENT);
         documentRTS.setType(DEFAULT_TYPE);
         documentRTS.setThump(DEFAULT_THUMP);
         documentRTS.setThumpContentType(DEFAULT_THUMP_CONTENT_TYPE);
+
+        DEFAULT_AUTHOR.setUserName(DEFAULT_AUTHOR_NAME);
+        when(mockAuthorService.createCurrentUserAsAuthor()).thenReturn(DEFAULT_AUTHOR);
     }
 
     @Test
@@ -111,8 +131,8 @@ public class DocumentRTSResourceIntTest {
         assertThat(documentRTS).hasSize(databaseSizeBeforeCreate + 1);
         DocumentRTS testDocumentRTS = documentRTS.get(documentRTS.size() - 1);
         assertThat(testDocumentRTS.getTitle()).isEqualTo(DEFAULT_TITLE);
-        assertThat(testDocumentRTS.getAuthor()).isEqualTo(DEFAULT_AUTHOR);
-        assertThat(testDocumentRTS.getContent()).isEqualTo(DEFAULT_CONTENT);
+        assertThat(testDocumentRTS.getAuthor().getUserName()).isEqualTo(DEFAULT_AUTHOR_NAME);
+        assertThat(testDocumentRTS.getContent()).isEqualTo(DEFAULT_CONTENT.toString());
         assertThat(testDocumentRTS.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testDocumentRTS.getThump()).isEqualTo(DEFAULT_THUMP);
         assertThat(testDocumentRTS.getThumpContentType()).isEqualTo(DEFAULT_THUMP_CONTENT_TYPE);
