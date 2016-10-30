@@ -57,9 +57,9 @@
                     }]
                 }
             })
-            .state('document.write', {
+            .state('document.new', {
                 parent: 'entity',
-                url: '/document/write',
+                url: '/document/new',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'rtsApp.content.detail.title'
@@ -71,7 +71,7 @@
                         controllerAs: 'vm'
                     },
                     'documentrts@app': {
-                        templateUrl: 'app/entities/document-rts/document-rts-stuff.html',
+                        templateUrl: 'app/entities/document-rts/document-rts-stuff.new.html',
                         controller: 'DocumentRTSStuffController',
                         controllerAs: 'vm'
                     }
@@ -82,7 +82,11 @@
                         return {
                             title: "Unknown Title",
                             author: null,
-                            content: [],
+                            content: [{
+                                id: "p1",
+                                type: "paragraph",
+                                content: ""
+                            }],
                             type: null,
                             thump: null,
                             thumpContentType: null,
@@ -96,8 +100,8 @@
                     }]
                 }
             })
-            .state('document.stuff', {
-                parent: 'document.write',
+            .state('document.new.stuff', {
+                parent: 'document.new',
                 url: '/stuff',
                 data: {
                     authorities: ['ROLE_USER']
@@ -115,16 +119,16 @@
                             }]
                         }
                     }).result.then(function () {
-                        $state.go('document.write');
+                        $state.go('document.new');
                     }, function () {
-                        $state.go('document.write');
+                        $state.go('document.new');
                     });
                 }]
 
             })
             .state('document-rts.new', {
                 parent: 'document-rts',
-                url: '/new',
+                url: '/newx',
                 data: {
                     authorities: ['ROLE_USER']
                 },
@@ -155,33 +159,64 @@
                     });
                 }]
             })
-            .state('document-rts.edit', {
-                parent: 'document-rts',
-                url: '/{id}/edit',
+            .state('document.edit', {
+                parent: 'entity',
+                url: '/document/{id}/edit',
+                data: {
+                    authorities: ['ROLE_USER'],
+                    pageTitle: 'rtsApp.documentRTS.detail.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'app/entities/document-rts/document-rts-write.html',
+                        controller: 'DocumentRTSWriteController',
+                        controllerAs: 'vm'
+                    },
+                    'documentrts@app': {
+                        templateUrl: 'app/entities/document-rts/document-rts-stuff.edit.html',
+                        controller: 'DocumentRTSStuffController',
+                        controllerAs: 'vm'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('documentRTS');
+                        $translatePartialLoader.addPart('contentType');
+                        return $translate.refresh();
+                    }],
+                    entity: ['$stateParams', 'DocumentRTS', function ($stateParams, DocumentRTS) {
+                        return DocumentRTS.get({id: $stateParams.id}).$promise;
+                    }]
+                }
+            })
+            .state('document.edit.stuff', {
+                parent: 'document.edit',
+                url: '/stuff',
                 data: {
                     authorities: ['ROLE_USER']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                     $uibModal.open({
-                        templateUrl: 'app/entities/document-rts/document-rts-dialog.html',
-                        controller: 'DocumentRTSDialogController',
+                        templateUrl: 'app/entities/document-rts/document-rts-stuff-dialog.html',
+                        controller: 'DocumentRTSStuffDialogController',
                         controllerAs: 'vm',
                         backdrop: 'static',
                         size: 'lg',
                         resolve: {
-                            entity: ['DocumentRTS', function (DocumentRTS) {
-                                return DocumentRTS.get({id: $stateParams.id}).$promise;
+                            entity: ['DocumentRTSDepositary', function (documentRTSDepositary) {
+                                return documentRTSDepositary.getDocument();
                             }]
                         }
                     }).result.then(function () {
-                        $state.go('document-rts', null, {reload: true});
+                        $state.go('document-rts-edit');
                     }, function () {
-                        $state.go('^');
+                        $state.go('document-rts-edit');
                     });
                 }]
+
             })
             .state('document-rts.delete', {
-                parent: 'document-rts',
+                parent: 'document',
                 url: '/{id}/delete',
                 data: {
                     authorities: ['ROLE_USER']
