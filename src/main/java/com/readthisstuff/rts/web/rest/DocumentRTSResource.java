@@ -53,9 +53,7 @@ public class DocumentRTSResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("documentRTS", "idexists", "A new documentRTS cannot already have an ID")).body(null);
         }
 
-        Author author = authorService.createCurrentUserAsAuthor();
-        documentRTS.setAuthor(author);
-        DocumentRTS result = documentRTSRepository.save(documentRTS);
+        DocumentRTS result = saveDocument(documentRTS);
         return ResponseEntity.created(new URI("/api/document-rts/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("documentRTS", result.getId().toString()))
                 .body(result);
@@ -79,11 +77,19 @@ public class DocumentRTSResource {
         if (documentRTS.getId() == null) {
             return createDocumentRTS(documentRTS);
         }
-        DocumentRTS result = documentRTSRepository.save(documentRTS);
+        DocumentRTS result = saveDocument(documentRTS);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("documentRTS", documentRTS.getId().toString()))
                 .body(result);
     }
+
+
+    private DocumentRTS saveDocument(DocumentRTS documentRTS) {
+        Author author = authorService.createCurrentUserAsAuthor();
+        documentRTS.setAuthor(author);
+        return documentRTSRepository.save(documentRTS);
+    }
+
 
     /**
      * GET  /document-rts : get all the documentRTS.
