@@ -113,7 +113,7 @@ public class Author implements Serializable {
                 "id=" + id +
                 ", firstName='" + firstName + "'" +
                 ", lastName='" + lastName + "'" +
-                ", email='" + userName + "'" +
+                ", userName='" + userName + "'" +
                 ", image='" + image + "'" +
                 ", imageContentType='" + imageContentType + "'" +
                 '}';

@@ -3,17 +3,15 @@ package com.readthisstuff.rts.web.rest;
 import com.readthisstuff.rts.RtsApp;
 import com.readthisstuff.rts.domain.Author;
 import com.readthisstuff.rts.repository.AuthorRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -26,6 +24,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,8 +44,8 @@ public class AuthorResourceIntTest {
     private static final String UPDATED_FIRST_NAME = "BBBBB";
     private static final String DEFAULT_LAST_NAME = "AAAAA";
     private static final String UPDATED_LAST_NAME = "BBBBB";
-    private static final String DEFAULT_EMAIL = "AAAAA";
-    private static final String UPDATED_EMAIL = "BBBBB";
+    private static final String DEFAULT_USERNAME = "AAAAA";
+    private static final String UPDATED_USERNAME = "BBBBB";
 
     private static final byte[] DEFAULT_IMAGE = TestUtil.createByteArray(1, "0");
     private static final byte[] UPDATED_IMAGE = TestUtil.createByteArray(2, "1");
@@ -72,8 +71,8 @@ public class AuthorResourceIntTest {
         AuthorResource authorResource = new AuthorResource();
         ReflectionTestUtils.setField(authorResource, "authorRepository", authorRepository);
         this.restAuthorMockMvc = MockMvcBuilders.standaloneSetup(authorResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setMessageConverters(jacksonMessageConverter).build();
+                .setCustomArgumentResolvers(pageableArgumentResolver)
+                .setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
@@ -82,7 +81,7 @@ public class AuthorResourceIntTest {
         author = new Author();
         author.setFirstName(DEFAULT_FIRST_NAME);
         author.setLastName(DEFAULT_LAST_NAME);
-        author.setUserName(DEFAULT_EMAIL);
+        author.setUserName(DEFAULT_USERNAME);
         author.setImage(DEFAULT_IMAGE);
         author.setImageContentType(DEFAULT_IMAGE_CONTENT_TYPE);
     }
@@ -104,7 +103,7 @@ public class AuthorResourceIntTest {
         Author testAuthor = authors.get(authors.size() - 1);
         assertThat(testAuthor.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
         assertThat(testAuthor.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
-        assertThat(testAuthor.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testAuthor.getUserName()).isEqualTo(DEFAULT_USERNAME);
         assertThat(testAuthor.getImage()).isEqualTo(DEFAULT_IMAGE);
         assertThat(testAuthor.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
     }
@@ -160,7 +159,7 @@ public class AuthorResourceIntTest {
         assertThat(authors).hasSize(databaseSizeBeforeTest);
     }
 
-    @Test
+    /*add the moment not required*/
     public void checkImageIsRequired() throws Exception {
         int databaseSizeBeforeTest = authorRepository.findAll().size();
         // set the field null
@@ -189,7 +188,7 @@ public class AuthorResourceIntTest {
                 .andExpect(jsonPath("$.[*].id").value(hasItem(author.getId())))
                 .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME.toString())))
                 .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
-                .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
+                .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USERNAME.toString())))
                 .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
                 .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))));
     }
@@ -201,14 +200,14 @@ public class AuthorResourceIntTest {
 
         // Get the author
         restAuthorMockMvc.perform(get("/api/authors/{id}", author.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.id").value(author.getId()))
-            .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME.toString()))
-            .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
-            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
-            .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
-            .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(author.getId()))
+                .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME.toString()))
+                .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
+                .andExpect(jsonPath("$.userName").value(DEFAULT_USERNAME.toString()))
+                .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
+                .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)));
     }
 
     @Test
@@ -229,7 +228,7 @@ public class AuthorResourceIntTest {
         updatedAuthor.setId(author.getId());
         updatedAuthor.setFirstName(UPDATED_FIRST_NAME);
         updatedAuthor.setLastName(UPDATED_LAST_NAME);
-        updatedAuthor.setUserName(UPDATED_EMAIL);
+        updatedAuthor.setUserName(UPDATED_USERNAME);
         updatedAuthor.setImage(UPDATED_IMAGE);
         updatedAuthor.setImageContentType(UPDATED_IMAGE_CONTENT_TYPE);
 
@@ -244,7 +243,7 @@ public class AuthorResourceIntTest {
         Author testAuthor = authors.get(authors.size() - 1);
         assertThat(testAuthor.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
         assertThat(testAuthor.getLastName()).isEqualTo(UPDATED_LAST_NAME);
-        assertThat(testAuthor.getUserName()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testAuthor.getUserName()).isEqualTo(UPDATED_USERNAME);
         assertThat(testAuthor.getImage()).isEqualTo(UPDATED_IMAGE);
         assertThat(testAuthor.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
     }

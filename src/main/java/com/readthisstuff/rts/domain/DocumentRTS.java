@@ -26,7 +26,7 @@ public class DocumentRTS implements Serializable {
     @Field("title")
     private String title;
 
-    //NotNull
+    //NotNull//
     @Field("author")
     private Author author;
 

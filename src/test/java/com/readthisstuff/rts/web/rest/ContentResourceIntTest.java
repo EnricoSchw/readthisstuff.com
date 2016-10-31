@@ -2,18 +2,17 @@ package com.readthisstuff.rts.web.rest;
 
 import com.readthisstuff.rts.RtsApp;
 import com.readthisstuff.rts.domain.Content;
+import com.readthisstuff.rts.domain.enumeration.ContentType;
 import com.readthisstuff.rts.repository.ContentRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -25,10 +24,9 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.readthisstuff.rts.domain.enumeration.ContentType;
 
 /**
  * Test class for the ContentResource REST controller.
@@ -66,8 +64,8 @@ public class ContentResourceIntTest {
         ContentResource contentResource = new ContentResource();
         ReflectionTestUtils.setField(contentResource, "contentRepository", contentRepository);
         this.restContentMockMvc = MockMvcBuilders.standaloneSetup(contentResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setMessageConverters(jacksonMessageConverter).build();
+                .setCustomArgumentResolvers(pageableArgumentResolver)
+                .setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
@@ -75,7 +73,7 @@ public class ContentResourceIntTest {
         contentRepository.deleteAll();
         content = new Content();
         content.setContent(DEFAULT_CONTENT);
-        content.setType(DEFAULT_TYPE);
+        content.setType(DEFAULT_TYPE.toString());
     }
 
     @Test
@@ -93,8 +91,8 @@ public class ContentResourceIntTest {
         List<Content> contents = contentRepository.findAll();
         assertThat(contents).hasSize(databaseSizeBeforeCreate + 1);
         Content testContent = contents.get(contents.size() - 1);
-        assertThat(testContent.getContent()).isEqualTo(DEFAULT_CONTENT);
-        assertThat(testContent.getType()).isEqualTo(DEFAULT_TYPE);
+        assertThat(testContent.getContent()).isEqualTo(DEFAULT_CONTENT.toString());
+        assertThat(testContent.getType()).isEqualTo(DEFAULT_TYPE.toString());
     }
 
     @Test
@@ -152,11 +150,11 @@ public class ContentResourceIntTest {
 
         // Get the content
         restContentMockMvc.perform(get("/api/contents/{id}", content.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.id").value(content.getId()))
-            .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT.toString()))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(content.getId()))
+                .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT.toString()))
+                .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()));
     }
 
     @Test
@@ -176,7 +174,7 @@ public class ContentResourceIntTest {
         Content updatedContent = new Content();
         updatedContent.setId(content.getId());
         updatedContent.setContent(UPDATED_CONTENT);
-        updatedContent.setType(UPDATED_TYPE);
+        updatedContent.setType(UPDATED_TYPE.toString());
 
         restContentMockMvc.perform(put("/api/contents")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -188,7 +186,7 @@ public class ContentResourceIntTest {
         assertThat(contents).hasSize(databaseSizeBeforeUpdate);
         Content testContent = contents.get(contents.size() - 1);
         assertThat(testContent.getContent()).isEqualTo(UPDATED_CONTENT);
-        assertThat(testContent.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testContent.getType()).isEqualTo(UPDATED_TYPE.toString());
     }
 
     @Test
