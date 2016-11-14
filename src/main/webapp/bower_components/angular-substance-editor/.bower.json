@@ -1,6 +1,6 @@
 {
   "name": "angular-substance-editor",
-  "version": "2.0.1-beta",
+  "version": "2.0.2-beta",
   "main": "./dist/angular-substance-editor.js",
   "ignore": [
     "**/.*",
@@ -24,13 +24,13 @@
     "angular-mocks": "^1.5.8"
   },
   "homepage": "https://github.com/EnricoSchw/angular-substance-editor",
-  "_release": "2.0.1-beta",
+  "_release": "2.0.2-beta",
   "_resolution": {
     "type": "version",
-    "tag": "v2.0.1-beta",
-    "commit": "7ccbdabcd7312d66acb4adff53721a4f80ba8f08"
+    "tag": "v2.0.2-beta",
+    "commit": "9e940d6ad1828db83687323e5488e6bdc33637d7"
   },
   "_source": "https://github.com/EnricoSchw/angular-substance-editor.git",
-  "_target": "^2.0.1-beta",
+  "_target": "^2.0.2-beta",
   "_originalSource": "angular-substance-editor"
 }
