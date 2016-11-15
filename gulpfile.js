@@ -142,10 +142,56 @@ gulp.task('inject:vendor', function () {
         .pipe(gulp.dest(config.scss)));
 });
 
+var bowerTest = {
+    overrides: {
+        "angular-substance-editor": {
+            "main": [
+                "dist/css/angular-substance-editor.css"
+            ]
+        }
+    }
+};
 gulp.task('inject:test', function () {
     return gulp.src(config.test + 'karma.conf.js')
         .pipe(plumber({errorHandler: handleErrors}))
-        .pipe(inject(gulp.src(bowerFiles({includeDev: true, filter: ['**/*.js']}), {read: false}), {
+        .pipe(inject(gulp.src(bowerFiles(
+            {
+                includeDev: true,
+                filter: ['**/*.js'],
+                "overrides": {
+                    "angular": {
+                        "dependencies": {
+                            "jquery": "2.2.4"
+                        }
+                    },
+                    "angular-cache-buster": {
+                        "dependencies": {
+                            "angular": "1.5.5"
+                        }
+                    },
+                    "angular-dynamic-locale": {
+                        "dependencies": {
+                            "angular": "1.5.5"
+                        }
+                    },
+                    "angular-substance-editor": {
+                        "main": [
+                            "../../../../test/javascript/mock/angular-substance-editor-mock.js",
+                            "dist/css/angular-substance-editor.css"
+                        ]
+                    },
+                    "bootstrap-sass": {
+                        "main": [
+                            "../bootswatch/simplex/_variables.scss",
+                            "assets/stylesheets/_bootstrap.scss",
+                            "../bootswatch/simplex/_bootswatch.scss"
+                        ]
+                    }
+                }
+            }),
+            {
+                read: false
+            }), {
             starttag: '// bower:js',
             endtag: '// endbower',
             transform: function (filepath) {
