@@ -92,7 +92,7 @@
   --collaborator-color-10: #FFB533;
 }
 
-
+/* TODO: @import './css/_index.css';*/
 
 /* switch-text-type */
 /* Switch Text Type Component
@@ -889,7 +889,6 @@ Don't grow, don't shrink, use width or height for size determination */
 .sc-text-property .se-selection-fragment.sm-collaborator-10 { background: rgba(--collaborator-color-10, 0.30); }
 .sc-text-property .se-container-annotation.se-anchor { position: relative; }
 .sc-text-property .sm-highlighted { background: #ddd; }
-
 
 /* You may want to use your own reset and pagestyle */
 /* Reset adapted from http://meyerweb.com/eric/tools/css/reset/

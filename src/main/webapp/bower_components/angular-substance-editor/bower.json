@@ -1,6 +1,6 @@
 {
   "name": "angular-substance-editor",
-  "version": "2.0.2-beta",
+  "version": "2.0.3-beta",
   "main": "./dist/angular-substance-editor.js",
   "ignore": [
     "**/.*",
