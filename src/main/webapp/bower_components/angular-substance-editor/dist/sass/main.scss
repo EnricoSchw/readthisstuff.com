@@ -1,10 +1,9 @@
 $fa-font-path: "../fonts" !default;
 
-@import '../../node_modules/font-awesome/scss/font-awesome';
-@import '../../node_modules/substance/styles/base/index';
+@import '../../node_modules/substance/substance.css';
+/* You may want to use your own reset and pagestyle */
+@import '../../node_modules/substance/substance-reset.css';
+@import '../../node_modules/substance/substance-pagestyle.css';
+@import url('../../node_modules/font-awesome/css/font-awesome.min.css');
 
-// Substance modules
-@import '../../node_modules/substance/styles/components/_all';
-@import '../../node_modules/substance/packages/_all';
 @import "_se-content.scss";
-

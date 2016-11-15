@@ -15,7 +15,7 @@ if (isDebug()) {
 module.exports = function (config) {
     config.set({
         // base path, that will be used to resolve files and exclude
-        basePath: 'src/test/javascript/'.replace(/[^/]+/g,'..'),
+        basePath: 'src/test/javascript/'.replace(/[^/]+/g, '..'),
 
         // testing framework to use (jasmine/mocha/qunit/...)
         frameworks: ['jasmine'],
@@ -47,7 +47,7 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.js',
             'src/main/webapp/bower_components/ng-file-upload/ng-file-upload.js',
             'src/main/webapp/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
-            'src/main/webapp/bower_components/angular-substance-editor/dist/angular-substance-editor.js',
+            'src/test/javascript/mock/angular-substance-editor-mock.js',
             'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',
             // endbower
             'src/main/webapp/app/app.module.js',
@@ -105,8 +105,8 @@ module.exports = function (config) {
         singleRun: false,
 
         // to avoid DISCONNECTED messages when connecting to slow virtual machines
-        browserDisconnectTimeout : 10000, // default 2000
-        browserDisconnectTolerance : 1, // default 0
-        browserNoActivityTimeout : 4*60*1000 //default 10000
+        browserDisconnectTimeout: 10000, // default 2000
+        browserDisconnectTolerance: 1, // default 0
+        browserNoActivityTimeout: 4 * 60 * 1000 //default 10000
     });
 };
