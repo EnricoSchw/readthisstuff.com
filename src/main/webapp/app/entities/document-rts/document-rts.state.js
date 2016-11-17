@@ -215,7 +215,37 @@
                 }]
 
             })
-            .state('document-rts.delete', {
+            .state('document.view', {
+                parent: 'entity',
+                url: '/document/{id}/view',
+                data: {
+                    authorities: ['ROLE_USER'],
+                    pageTitle: 'rtsApp.documentRTS.view.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'app/entities/document-rts/document-rts-view.html',
+                        controller: 'DocumentRTSWriteController',
+                        controllerAs: 'vm'
+                    },
+                    'documentrts@app': {
+                        templateUrl: 'app/entities/document-rts/document-rts-stuff.view.html',
+                        controller: 'DocumentRTSStuffController',
+                        controllerAs: 'vm'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('documentRTS');
+                        $translatePartialLoader.addPart('contentType');
+                        return $translate.refresh();
+                    }],
+                    entity: ['$stateParams', 'DocumentRTS', function ($stateParams, DocumentRTS) {
+                        return DocumentRTS.get({id: $stateParams.id}).$promise;
+                    }]
+                }
+            })
+            .state('document.delete', {
                 parent: 'document',
                 url: '/{id}/delete',
                 data: {
