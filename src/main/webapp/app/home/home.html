@@ -8,20 +8,36 @@
 </div>
 <!-- /.row -->
 
+<style>
+    .ratio {
 
+        display: table-cell;
+        max-width: 100%;
+    }
+</style>
 <!-- Projects Row -->
 <div ng-repeat="stuffRow in vm.stuffSet" class="row" infinite-scroll="vm.loadPage(vm.page + 1)"
      infinite-scroll-disabled="vm.page >= vm.links['last']">
 
     <div ng-repeat="stuff in stuffRow track by stuff.id" class="col-md-4 portfolio-item">
-        <a href="#">
-            <img class="img-responsive" src="content/images/textthumb.png" alt="">
+
+        <a ng-if="stuff.thump" ui-sref="document.view({id:stuff.id})">
+            <img class="ratio" data-ng-src="{{'data:' + stuff.thumpContentType + ';base64,' + stuff.thump}}"
+                 style="display: block; width: 100%; max-height: 100%;"/>
         </a>
-        <h3>
-            <a href="#">Article Name {{stuff.id}}</a>
-        </h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque
-            urna varius vitae.</p>
+
+        <a ng-if="!stuff.thump" ui-sref="document.view({id:stuff.id})">
+            <img class="ratio" src="content/images/textthumb.png" alt="">
+        </a>
+
+        <h4>
+            <a ui-sref="document.view({id:stuff.id})">{{stuff.title}}</a>
+
+        </h4>
+        <h5><span>Author:
+            <a ui-sref="document.view({id:stuff.id})">{{stuff.author.userName}}</a>
+        </h5>
+        <p>{{stuff.content[0].content}}</p>
     </div>
 
 </div>
