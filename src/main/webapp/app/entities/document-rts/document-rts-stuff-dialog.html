@@ -30,7 +30,7 @@
             <label class="control-label" translate="rtsApp.documentRTS.thump" for="field_thump">Thump</label>
             <div>
                 <img data-ng-src="{{'data:' + vm.documentRTS.thumpContentType + ';base64,' + vm.documentRTS.thump}}"
-                     style="max-height: 100px;" ng-if="vm.documentRTS.thump"/>
+                     style="width:175px; height: 100px;" ng-if="vm.documentRTS.thump"/>
                 <div ng-if="vm.documentRTS.thump" class="help-block clearfix">
                     <span class="pull-left">{{vm.documentRTS.thumpContentType}}, {{vm.byteSize(vm.documentRTS.thump)}}</span>
                     <button ng-click="vm.documentRTS.thump=null;vm.documentRTS.thumpContentType=null;"

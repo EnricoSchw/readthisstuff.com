@@ -34,6 +34,13 @@
                              style="max-height: 30px;"/>
                     </a>
                     <span ng-if="documentRTS.thump">{{documentRTS.thumpContentType}}, {{vm.byteSize(documentRTS.thump)}}</span>
+
+
+                    <a ng-if="!documentRTS.thump" ui-sref="document.view({id:stuff.id})">
+                        <img class="ratio" src="content/images/textthumb.png" style="max-height: 30px;" alt="">
+                    </a>
+
+
                 </td>
 
                 <td>{{documentRTS.title}}</td>

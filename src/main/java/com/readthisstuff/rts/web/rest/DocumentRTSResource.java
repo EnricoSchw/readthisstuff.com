@@ -5,6 +5,7 @@ import com.readthisstuff.rts.domain.Author;
 import com.readthisstuff.rts.domain.DocumentRTS;
 import com.readthisstuff.rts.repository.DocumentRTSRepository;
 import com.readthisstuff.rts.service.AuthorService;
+import com.readthisstuff.rts.service.util.ImageService;
 import com.readthisstuff.rts.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -34,6 +36,9 @@ public class DocumentRTSResource {
 
     @Inject
     private AuthorService authorService;
+
+    @Inject
+    private ImageService imageService;
 
 
     /**
@@ -84,10 +89,21 @@ public class DocumentRTSResource {
     }
 
 
-    private DocumentRTS saveDocument(DocumentRTS documentRTS) {
+    private DocumentRTS saveDocument(DocumentRTS doc) {
         Author author = authorService.createCurrentUserAsAuthor();
-        documentRTS.setAuthor(author);
-        return documentRTSRepository.save(documentRTS);
+        doc.setAuthor(author);
+        byte[] img = optimizeThumb(doc.getThump(), doc.getThumpContentType());
+        doc.setThump(img);
+        return documentRTSRepository.save(doc);
+    }
+
+    private byte[] optimizeThumb(final byte[] img, final String imgType) {
+        try {
+            return imageService.resizeThumb(img, 700, 400, imgType);
+        } catch (IOException e) {
+            log.debug("Optimize Thumb something goes wrong: {}", e);
+        }
+        return img;
     }
 
 

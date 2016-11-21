@@ -14,6 +14,19 @@
         display: table-cell;
         max-width: 100%;
     }
+
+    .line-clamp {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    .line-clamp-container {
+        height: 60px;
+        overflow: hidden;
+
+    }
 </style>
 <!-- Projects Row -->
 <div ng-repeat="stuffRow in vm.stuffSet" class="row" infinite-scroll="vm.loadPage(vm.page + 1)"
@@ -21,23 +34,34 @@
 
     <div ng-repeat="stuff in stuffRow track by stuff.id" class="col-md-4 portfolio-item">
 
-        <a ng-if="stuff.thump" ui-sref="document.view({id:stuff.id})">
-            <img class="ratio" data-ng-src="{{'data:' + stuff.thumpContentType + ';base64,' + stuff.thump}}"
-                 style="display: block; width: 100%; max-height: 100%;"/>
-        </a>
+        <div class="thumbnail">
 
-        <a ng-if="!stuff.thump" ui-sref="document.view({id:stuff.id})">
-            <img class="ratio" src="content/images/textthumb.png" alt="">
-        </a>
+            <a ng-if="stuff.thump" ui-sref="document.view({id:stuff.id})">
+                <img class="ratio" data-ng-src="{{'data:' + stuff.thumpContentType + ';base64,' + stuff.thump}}"/>
+            </a>
+            <a ng-if="!stuff.thump" ui-sref="document.view({id:stuff.id})">
+                <img class="ratio" src="content/images/textthumb.png" alt="">
+            </a>
 
-        <h4>
-            <a ui-sref="document.view({id:stuff.id})">{{stuff.title}}</a>
+            <div class="caption">
+                <h9 class="pull-right"><a ui-sref="document.view({id:stuff.id})">{{stuff.author.userName}}</a></h9>
+                <h9><a ui-sref="document.view({id:stuff.id})">{{stuff.title}}</a></h9>
+                <div class="line-clamp-container">
 
-        </h4>
-        <h5><span>Author:
-            <a ui-sref="document.view({id:stuff.id})">{{stuff.author.userName}}</a>
-        </h5>
-        <p>{{stuff.content[0].content}}</p>
+                    <p class="line-clamp">{{stuff.content[0].content}}</p>
+                </div>
+
+
+                <p class="pull-right">18 reads</p>
+                <p>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                </p>
+            </div>
+        </div>
     </div>
 
 </div>
