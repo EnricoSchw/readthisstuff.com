@@ -219,7 +219,7 @@
                 parent: 'entity',
                 url: '/document/{id}/view',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: [],
                     pageTitle: 'rtsApp.documentRTS.view.title'
                 },
                 views: {

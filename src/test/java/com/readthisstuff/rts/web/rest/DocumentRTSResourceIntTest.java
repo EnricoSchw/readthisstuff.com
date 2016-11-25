@@ -28,6 +28,8 @@ import org.springframework.util.Base64Utils;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Set;
 
@@ -68,6 +70,16 @@ public class DocumentRTSResourceIntTest {
     private static final byte[] UPDATED_THUMP = TestUtil.createByteArray(2, "1");
     private static final String DEFAULT_THUMP_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_THUMP_CONTENT_TYPE = "image/png";
+
+
+    private static final LocalDate DEFAULT_PUBLICATION_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_PUBLICATION_DATE = LocalDate.now(ZoneId.systemDefault());
+
+    private static final Boolean DEFAULT_IS_PUBLIC = false;
+    private static final Boolean UPDATED_IS_PUBLIC = true;
+
+    private static final Integer DEFAULT_CLICKS = 0;
+    private static final Integer UPDATED_CLICKS = 1;
 
     @Inject
     private DocumentRTSRepository documentRTSRepository;
@@ -132,6 +144,10 @@ public class DocumentRTSResourceIntTest {
         documentRTS.setType(DEFAULT_TYPE);
         documentRTS.setThump(DEFAULT_THUMP);
         documentRTS.setThumpContentType(DEFAULT_THUMP_CONTENT_TYPE);
+
+        documentRTS.setPublicationDate(DEFAULT_PUBLICATION_DATE);
+        documentRTS.setIsPublic(DEFAULT_IS_PUBLIC);
+        documentRTS.setClicks(DEFAULT_CLICKS);
     }
 
     @Test
@@ -159,6 +175,13 @@ public class DocumentRTSResourceIntTest {
         assertThat(testDocumentRTS.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testDocumentRTS.getThump()).isEqualTo(DEFAULT_THUMP);
         assertThat(testDocumentRTS.getThumpContentType()).isEqualTo(DEFAULT_THUMP_CONTENT_TYPE);
+
+
+        assertThat(testDocumentRTS.getPublicationDate()).isEqualTo(DEFAULT_PUBLICATION_DATE);
+        assertThat(testDocumentRTS.isIsPublic()).isEqualTo(DEFAULT_IS_PUBLIC);
+        assertThat(testDocumentRTS.getClicks()).isEqualTo(DEFAULT_CLICKS);
+
+
     }
 
     /*not yet*/
@@ -263,7 +286,11 @@ public class DocumentRTSResourceIntTest {
                 .andExpect(jsonPath("$.[*].content.[*].content").value(hasItem(DEFAULT_CONTENT_CONTENT)))
                 .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
                 .andExpect(jsonPath("$.[*].thumpContentType").value(hasItem(DEFAULT_THUMP_CONTENT_TYPE)))
-                .andExpect(jsonPath("$.[*].thump").value(hasItem(Base64Utils.encodeToString(DEFAULT_THUMP))));
+                .andExpect(jsonPath("$.[*].thump").value(hasItem(Base64Utils.encodeToString(DEFAULT_THUMP))))
+                .andExpect(jsonPath("$.[*].publicationDate").value(hasItem(DEFAULT_PUBLICATION_DATE.toString())))
+                .andExpect(jsonPath("$.[*].isPublic").value(hasItem(DEFAULT_IS_PUBLIC.booleanValue())))
+                .andExpect(jsonPath("$.[*].clicks").value(hasItem(DEFAULT_CLICKS)));
+
     }
 
     @Test
@@ -283,7 +310,10 @@ public class DocumentRTSResourceIntTest {
                 .andExpect(jsonPath("$.content.[*].content").value(DEFAULT_CONTENT_CONTENT))
                 .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
                 .andExpect(jsonPath("$.thumpContentType").value(DEFAULT_THUMP_CONTENT_TYPE))
-                .andExpect(jsonPath("$.thump").value(Base64Utils.encodeToString(DEFAULT_THUMP)));
+                .andExpect(jsonPath("$.thump").value(Base64Utils.encodeToString(DEFAULT_THUMP)))
+                .andExpect(jsonPath("$.publicationDate").value(DEFAULT_PUBLICATION_DATE.toString()))
+                .andExpect(jsonPath("$.isPublic").value(DEFAULT_IS_PUBLIC.booleanValue()))
+                .andExpect(jsonPath("$.clicks").value(DEFAULT_CLICKS));
     }
 
     @Test
@@ -308,6 +338,9 @@ public class DocumentRTSResourceIntTest {
         updatedDocumentRTS.setType(UPDATED_TYPE);
         updatedDocumentRTS.setThump(UPDATED_THUMP);
         updatedDocumentRTS.setThumpContentType(UPDATED_THUMP_CONTENT_TYPE);
+        updatedDocumentRTS.setPublicationDate(UPDATED_PUBLICATION_DATE);
+        updatedDocumentRTS.setIsPublic(UPDATED_IS_PUBLIC);
+        updatedDocumentRTS.setClicks(UPDATED_CLICKS);
 
         restDocumentRTSMockMvc.perform(put("/api/document-rts")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -328,6 +361,11 @@ public class DocumentRTSResourceIntTest {
         assertThat(testDocumentRTS.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testDocumentRTS.getThump()).isEqualTo(UPDATED_THUMP);
         assertThat(testDocumentRTS.getThumpContentType()).isEqualTo(UPDATED_THUMP_CONTENT_TYPE);
+
+        assertThat(testDocumentRTS.getPublicationDate()).isEqualTo(UPDATED_PUBLICATION_DATE);
+        assertThat(testDocumentRTS.isIsPublic()).isEqualTo(UPDATED_IS_PUBLIC);
+        assertThat(testDocumentRTS.getClicks()).isEqualTo(UPDATED_CLICKS);
+
     }
 
     @Test

@@ -6,7 +6,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,7 +24,8 @@ public class DocumentRTS implements Serializable {
     @Id
     private String id;
 
-    //NotNull
+    @NotNull
+    @Size(min = 3, max = 20)
     @Field("title")
     private String title;
 
@@ -44,6 +47,17 @@ public class DocumentRTS implements Serializable {
 
     @Field("thump_content_type")
     private String thumpContentType;
+
+    @Field("publication_date")
+    private LocalDate publicationDate;
+
+    @Field("is_public")
+    private Boolean isPublic;
+
+    //Min(value = 0)
+    @Field("clicks")
+    private Integer clicks;
+
 
     public String getId() {
         return id;
@@ -101,6 +115,30 @@ public class DocumentRTS implements Serializable {
         this.thumpContentType = thumpContentType;
     }
 
+    public LocalDate getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(LocalDate publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public Boolean isIsPublic() {
+        return isPublic;
+    }
+
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
+    public Integer getClicks() {
+        return clicks;
+    }
+
+    public void setClicks(Integer clicks) {
+        this.clicks = clicks;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -131,6 +169,9 @@ public class DocumentRTS implements Serializable {
                 ", type='" + type + "'" +
                 ", thump='" + thump + "'" +
                 ", thumpContentType='" + thumpContentType + "'" +
+                ", publicationDate='" + publicationDate + "'" +
+                ", isPublic='" + isPublic + "'" +
+                ", clicks='" + clicks + "'" +
                 '}';
     }
 }

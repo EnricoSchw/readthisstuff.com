@@ -4,17 +4,19 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 /**
- * A Stuff.
+ * A DocumentStuff.
  */
 
-@Document(collection = "stuff")
-public class Stuff implements Serializable {
+@Document(collection = "document_stuff")
+public class DocumentStuff implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,24 +24,36 @@ public class Stuff implements Serializable {
     private String id;
 
     @NotNull
+    @Size(min = 3, max = 20)
     @Field("title")
     private String title;
 
-    @NotNull
     @Field("description")
     private String description;
 
-    @NotNull
     @Field("publication_date")
     private LocalDate publicationDate;
 
-    @NotNull
+    @Field("is_public")
+    private Boolean isPublic;
+
+    @Min(value = 0)
     @Field("clicks")
     private Integer clicks;
 
-    @NotNull
     @Field("author")
     private String author;
+
+    @Field("author_id")
+    private String authorId;
+
+    //NotNull
+    @Field("thump")
+    private byte[] thump;
+
+    @Field("thump_content_type")
+    private String thumpContentType;
+
 
     public String getId() {
         return id;
@@ -73,6 +87,14 @@ public class Stuff implements Serializable {
         this.publicationDate = publicationDate;
     }
 
+    public Boolean isIsPublic() {
+        return isPublic;
+    }
+
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
     public Integer getClicks() {
         return clicks;
     }
@@ -89,6 +111,31 @@ public class Stuff implements Serializable {
         this.author = author;
     }
 
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
+
+
+    public byte[] getThump() {
+        return thump;
+    }
+
+    public void setThump(byte[] thump) {
+        this.thump = thump;
+    }
+
+    public String getThumpContentType() {
+        return thumpContentType;
+    }
+
+    public void setThumpContentType(String thumpContentType) {
+        this.thumpContentType = thumpContentType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -97,11 +144,11 @@ public class Stuff implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Stuff stuff = (Stuff) o;
-        if(stuff.id == null || id == null) {
+        DocumentStuff documentStuff = (DocumentStuff) o;
+        if (documentStuff.id == null || id == null) {
             return false;
         }
-        return Objects.equals(id, stuff.id);
+        return Objects.equals(id, documentStuff.id);
     }
 
     @Override
@@ -111,13 +158,15 @@ public class Stuff implements Serializable {
 
     @Override
     public String toString() {
-        return "Stuff{" +
-            "id=" + id +
-            ", title='" + title + "'" +
-            ", description='" + description + "'" +
-            ", publicationDate='" + publicationDate + "'" +
-            ", clicks='" + clicks + "'" +
-            ", author='" + author + "'" +
-            '}';
+        return "DocumentStuff{" +
+                "id=" + id +
+                ", title='" + title + "'" +
+                ", description='" + description + "'" +
+                ", publicationDate='" + publicationDate + "'" +
+                ", isPublic='" + isPublic + "'" +
+                ", clicks='" + clicks + "'" +
+                ", author='" + author + "'" +
+                ", authorId='" + authorId + "'" +
+                '}';
     }
 }

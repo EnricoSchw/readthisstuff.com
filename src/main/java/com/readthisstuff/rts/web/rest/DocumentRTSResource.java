@@ -92,6 +92,7 @@ public class DocumentRTSResource {
     private DocumentRTS saveDocument(DocumentRTS doc) {
         Author author = authorService.createCurrentUserAsAuthor();
         doc.setAuthor(author);
+
         byte[] img = optimizeThumb(doc.getThump(), doc.getThumpContentType());
         doc.setThump(img);
         return documentRTSRepository.save(doc);
