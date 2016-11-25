@@ -5,9 +5,9 @@
         .module('rtsApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', 'DocumentRTS'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', 'DocumentStuff'];
 
-    function HomeController($scope, Principal, LoginService, $state, DocumentRTS) {
+    function HomeController($scope, Principal, LoginService, $state, DocumentStuff) {
         var vm = this;
 
         vm.account = null;
@@ -37,7 +37,7 @@
 
 
         function loadAll() {
-            DocumentRTS.query(function (result) {
+            DocumentStuff.query(function (result) {
                 var subStuffSet = [],
                     stuffSet = [],
                     i = 0;

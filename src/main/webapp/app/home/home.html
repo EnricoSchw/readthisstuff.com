@@ -44,15 +44,15 @@
             </a>
 
             <div class="caption">
-                <h9 class="pull-right"><a ui-sref="document.view({id:stuff.id})">{{stuff.author.userName}}</a></h9>
+                <h9 class="pull-right"><a ui-sref="document.view({id:stuff.id})">{{stuff.author}}</a></h9>
                 <h9><a ui-sref="document.view({id:stuff.id})">{{stuff.title}}</a></h9>
                 <div class="line-clamp-container">
-
-                    <p class="line-clamp">{{stuff.content[0].content}}</p>
+                    <p class="line-clamp">{{stuff.description}}</p>
+                    <p class="line-clamp">{{stuff.publicationDate}}</p>
                 </div>
 
 
-                <p class="pull-right">18 reads</p>
+                <p class="pull-right">{{stuff.clicks}} reads</p>
                 <p>
                     <span class="glyphicon glyphicon-star"></span>
                     <span class="glyphicon glyphicon-star"></span>
