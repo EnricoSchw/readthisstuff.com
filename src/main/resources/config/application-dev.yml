@@ -22,10 +22,16 @@ spring:
             uri: mongodb://localhost:27017
             database: rts
     mail:
-        host: localhost
-        port: 25
+        host: smtp.gmail.com
+        port: 587
         username:
         password:
+        protocol: smtp
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
     messages:
         cache-seconds: 1
     thymeleaf:
