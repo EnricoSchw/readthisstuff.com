@@ -122,7 +122,10 @@
         "emailexists": "E-mail wird bereits verwendet!",
         "idexists": "Ein neuer {{entityName}} kann noch keine ID haben"
     },
-    "footer": "Dies ist Ihre Fußzeile",
+    "footer": {
+        "privacy": "Privacy",
+        "impressum": "Impressum"
+    },
     "bootswatch": {
         "themeSelector": "Theme"
     }
