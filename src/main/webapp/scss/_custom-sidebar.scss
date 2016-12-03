@@ -109,7 +109,8 @@ body {
   color: $text-color;
 }
 
-@media(min-width: 768px) {
+/** Css for toogle **/
+@media(min-width: 0px) {
   #wrapper {
     padding-left: 250px;
   }
