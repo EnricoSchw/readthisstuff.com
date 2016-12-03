@@ -32,31 +32,6 @@
                     }]
                 }
             })
-            .state('document-rts-detail', {
-                parent: 'entity',
-                url: '/document-rts/{id}',
-                data: {
-                    authorities: ['ROLE_USER'],
-                    pageTitle: 'rtsApp.documentRTS.detail.title'
-                },
-                views: {
-                    'content@': {
-                        templateUrl: 'app/entities/document-rts/document-rts-detail.html',
-                        controller: 'DocumentRTSDetailController',
-                        controllerAs: 'vm'
-                    }
-                },
-                resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('documentRTS');
-                        $translatePartialLoader.addPart('contentType');
-                        return $translate.refresh();
-                    }],
-                    entity: ['$stateParams', 'DocumentRTS', function ($stateParams, DocumentRTS) {
-                        return DocumentRTS.get({id: $stateParams.id}).$promise;
-                    }]
-                }
-            })
             .state('document.new', {
                 parent: 'entity',
                 url: '/document/new',
@@ -125,39 +100,6 @@
                     });
                 }]
 
-            })
-            .state('document-rts.new', {
-                parent: 'document-rts',
-                url: '/newx',
-                data: {
-                    authorities: ['ROLE_USER']
-                },
-                onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
-                    $uibModal.open({
-                        templateUrl: 'app/entities/document-rts/document-rts-dialog.html',
-                        controller: 'DocumentRTSDialogController',
-                        controllerAs: 'vm',
-                        backdrop: 'static',
-                        size: 'lg',
-                        resolve: {
-                            entity: function () {
-                                return {
-                                    title: null,
-                                    author: null,
-                                    content: null,
-                                    type: null,
-                                    thump: null,
-                                    thumpContentType: null,
-                                    id: null
-                                };
-                            }
-                        }
-                    }).result.then(function () {
-                        $state.go('document-rts', null, {reload: true});
-                    }, function () {
-                        $state.go('document-rts');
-                    });
-                }]
             })
             .state('document.edit', {
                 parent: 'entity',
