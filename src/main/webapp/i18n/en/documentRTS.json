@@ -1,6 +1,6 @@
 {
     "rtsApp": {
-        "documentRTS" : {
+        "documentRTS": {
             "home": {
                 "title": "Document RTS",
                 "createLabel": "Create a new Document RTS",
@@ -20,7 +20,10 @@
             "author": "Author",
             "content": "Content",
             "type": "Type",
-            "thump": "Thump"
+            "thump": "Thump",
+            "public": "Public",
+            "yes": "Yes",
+            "no": "No"
         }
     }
 }

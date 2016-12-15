@@ -17,7 +17,8 @@
             'infinite-scroll',
             // jhipster-needle-angularjs-add-module JHipster will add new module here
             'angular-substance-editor',
-            'angular-loading-bar'
+            'angular-loading-bar',
+            'switcher'
         ])
         .run(run);
 
