@@ -174,4 +174,8 @@ public class DocumentRTS implements Serializable {
                 ", clicks='" + clicks + "'" +
                 '}';
     }
+
+    public Boolean getIsPublic() {
+        return isPublic;
+    }
 }

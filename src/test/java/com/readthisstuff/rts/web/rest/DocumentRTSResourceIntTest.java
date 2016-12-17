@@ -383,4 +383,22 @@ public class DocumentRTSResourceIntTest {
         List<DocumentRTS> documentRTS = documentRTSRepository.findAll();
         assertThat(documentRTS).hasSize(databaseSizeBeforeDelete - 1);
     }
+
+    @Test
+    public void publishDocumentRTS() throws Exception {
+        documentRTSRepository.save(documentRTS);
+        int databaseSizeBeforeUpdate = documentRTSRepository.findAll().size();
+
+        // Get the documentRTS
+        restDocumentRTSMockMvc.perform(put("/api/document-rts/{id}/publish", documentRTS.getId())
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
+
+        // Validate the database size not change
+        List<DocumentRTS> documentRTS = documentRTSRepository.findAll();
+        assertThat(documentRTS).hasSize(databaseSizeBeforeUpdate);
+
+        DocumentRTS testDocumentRTS = documentRTS.get(documentRTS.size() - 1);
+
+    }
 }
