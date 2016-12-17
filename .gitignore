@@ -133,12 +133,3 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
-
-######################
-# Production properties
-######################
-/src/main/resources/config/application-prod.yml
-
-.vscode/
-PhantomJS_*
-

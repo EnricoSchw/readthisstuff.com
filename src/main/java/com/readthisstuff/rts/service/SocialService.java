@@ -4,6 +4,7 @@ import com.readthisstuff.rts.domain.Authority;
 import com.readthisstuff.rts.domain.User;
 import com.readthisstuff.rts.repository.AuthorityRepository;
 import com.readthisstuff.rts.repository.UserRepository;
+
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -15,10 +16,7 @@ import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Optional;
@@ -46,10 +44,10 @@ public class SocialService {
     public void deleteUserSocialConnection(String login) {
         ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(login);
         connectionRepository.findAllConnections().keySet().stream()
-                .forEach(providerId -> {
-                    connectionRepository.removeConnections(providerId);
-                    log.debug("Delete user social connection providerId: {}", providerId);
-                });
+            .forEach(providerId -> {
+                connectionRepository.removeConnections(providerId);
+                log.debug("Delete user social connection providerId: {}", providerId);
+            });
     }
 
     public void createSocialUser(Connection<?> connection, String langKey) {
@@ -104,7 +102,7 @@ public class SocialService {
 
     /**
      * @return login if provider manage a login like Twitter or Github otherwise email address.
-     * Because provider like Google or Facebook didn't provide login or login like "12099388847393"
+     *         Because provider like Google or Facebook didn't provide login or login like "12099388847393"
      */
     private String getLoginDependingOnProviderId(UserProfile userProfile, String providerId) {
         switch (providerId) {
@@ -118,36 +116,5 @@ public class SocialService {
     private void createSocialConnection(String login, Connection<?> connection) {
         ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(login);
         connectionRepository.addConnection(connection);
-    }
-
-    @PostConstruct
-    private void init() {
-        try {
-            String[] fieldsToMap = {"id", "about", "age_range", "birthday",
-                    "context", "cover", "currency", "devices", "education",
-                    "email", "favorite_athletes", "favorite_teams",
-                    "first_name", "gender", "hometown", "inspirational_people",
-                    "installed", "install_type", "is_verified", "languages",
-                    "last_name", "link", "locale", "location", "meeting_for",
-                    "middle_name", "name", "name_format", "political",
-                    "quotes", "payment_pricepoints", "relationship_status",
-                    "religion", "security_settings", "significant_other",
-                    "sports", "test_group", "timezone", "third_party_id",
-                    "updated_time", "verified", "viewer_can_send_gift",
-                    "website", "work"};
-
-            Field field = Class.forName(
-                    "org.springframework.social.facebook.api.UserOperations")
-                    .getDeclaredField("PROFILE_FIELDS");
-            field.setAccessible(true);
-
-            Field modifiers = field.getClass().getDeclaredField("modifiers");
-            modifiers.setAccessible(true);
-            modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-            field.set(null, fieldsToMap);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 }

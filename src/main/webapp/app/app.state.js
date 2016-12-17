@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -15,11 +15,6 @@
                     templateUrl: 'app/layouts/navbar/navbar.html',
                     controller: 'NavbarController',
                     controllerAs: 'vm'
-                },
-                'sidebar@': {
-                    templateUrl: 'app/layouts/sidebar/sidebar.html',
-                    controller: 'SidebarController',
-                    controllerAs: 'vm'
                 }
             },
             resolve: {
@@ -30,9 +25,6 @@
                 ],
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('global');
-                    $translatePartialLoader.addPart('sidebar');
-                    $translatePartialLoader.addPart('content');
-                    $translatePartialLoader.addPart('documentRTS');
                 }]
             }
         });

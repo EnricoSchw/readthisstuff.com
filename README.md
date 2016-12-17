@@ -1,4 +1,4 @@
-# readthisstuff.com  [![Build Status](https://travis-ci.org/EnricoSchw/readthisstuff.com.svg?branch=master)](https://travis-ci.org/EnricoSchw/readthisstuff.com)
+# rts
 
 This application was generated using JHipster, you can find documentation and help at [https://jhipster.github.io](https://jhipster.github.io).
 
@@ -28,11 +28,6 @@ Bower is used to manage CSS and JavaScript dependencies used in this application
 specifying a newer version in `bower.json`. You can also run `bower update` and `bower install` to manage dependencies.
 Add the `-h` flag on any command to see how you can use it. For example, `bower update -h`.
 
-### Generate Entities
-
-    cp ~/Downloads/jhipster-jdl.jh .
-    jhipster-uml jhipster-jdl.jh -db mongodb
-    yo jhipster:import-jdl  jhipster-jdl.jh
 
 ## Building for production
 
@@ -50,9 +45,6 @@ To ensure everything worked, run:
 Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
 
 ## Testing
-
-    ./gradlew test --tests path/to/test/MyUnitTest
-
 
 Unit tests are run by [Karma][] and written with [Jasmine][]. They're located in `src/test/javascript/` and can be run with:
 
@@ -93,7 +85,3 @@ To setup this project in Jenkins, use the following configuration:
 [Karma]: http://karma-runner.github.io/
 [Jasmine]: http://jasmine.github.io/2.0/introduction.html
 [Protractor]: https://angular.github.io/protractor/
-
-
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome-remote-debugging-port=9222
-
