@@ -1,4 +1,4 @@
-// Generated on 2016-07-17 using generator-jhipster 3.4.2
+// Generated on 2016-12-17 using generator-jhipster 3.4.2
 'use strict';
 
 var gulp = require('gulp'),
@@ -26,8 +26,7 @@ var gulp = require('gulp'),
     inject = require('gulp-inject'),
     angularFilesort = require('gulp-angular-filesort'),
     naturalSort = require('gulp-natural-sort'),
-    bowerFiles = require('main-bower-files'),
-    browserify = require('gulp-browserify');
+    bowerFiles = require('main-bower-files');
 
 var handleErrors = require('./gulp/handleErrors'),
     serve = require('./gulp/serve'),
@@ -39,30 +38,30 @@ var yorc = require('./.yo-rc.json')['generator-jhipster'];
 var config = require('./gulp/config');
 
 gulp.task('clean', function () {
-    return del([config.dist], {dot: true});
+    return del([config.dist], { dot: true });
 });
 
 gulp.task('copy', function () {
-    return es.merge(
+    return es.merge( 
         gulp.src(config.app + 'i18n/**')
-            .pipe(plumber({errorHandler: handleErrors}))
-            .pipe(changed(config.dist + 'i18n/'))
-            .pipe(gulp.dest(config.dist + 'i18n/')),
+        .pipe(plumber({errorHandler: handleErrors}))
+        .pipe(changed(config.dist + 'i18n/'))
+        .pipe(gulp.dest(config.dist + 'i18n/')),
         gulp.src(config.app + 'content/**/*.{woff,woff2,svg,ttf,eot,otf}')
-            .pipe(plumber({errorHandler: handleErrors}))
-            .pipe(changed(config.dist + 'content/fonts/'))
-            .pipe(flatten())
-            .pipe(rev())
-            .pipe(gulp.dest(config.dist + 'content/fonts/'))
-            .pipe(rev.manifest(config.revManifest, {
-                base: config.dist,
-                merge: true
-            }))
-            .pipe(gulp.dest(config.dist)),
-        gulp.src([config.app + 'robots.txt', config.app + 'favicon.ico', config.app + '.htaccess'], {dot: true})
-            .pipe(plumber({errorHandler: handleErrors}))
-            .pipe(changed(config.dist))
-            .pipe(gulp.dest(config.dist))
+        .pipe(plumber({errorHandler: handleErrors}))
+        .pipe(changed(config.dist + 'content/fonts/'))
+        .pipe(flatten())
+        .pipe(rev())
+        .pipe(gulp.dest(config.dist + 'content/fonts/'))
+        .pipe(rev.manifest(config.revManifest, {
+            base: config.dist,
+            merge: true
+        }))
+        .pipe(gulp.dest(config.dist)),
+        gulp.src([config.app + 'robots.txt', config.app + 'favicon.ico', config.app + '.htaccess'], { dot: true })
+        .pipe(plumber({errorHandler: handleErrors}))
+        .pipe(changed(config.dist))
+        .pipe(gulp.dest(config.dist))
     );
 });
 
@@ -84,16 +83,16 @@ gulp.task('images', function () {
 gulp.task('sass', function () {
     return es.merge(
         gulp.src(config.sassSrc)
-            .pipe(plumber({errorHandler: handleErrors}))
-            .pipe(expect(config.sassSrc))
-            .pipe(changed(config.cssDir, {extension: '.css'}))
-            .pipe(sass({includePaths: config.bower}).on('error', sass.logError))
-            .pipe(gulp.dest(config.cssDir)),
+        .pipe(plumber({errorHandler: handleErrors}))
+        .pipe(expect(config.sassSrc))
+        .pipe(changed(config.cssDir, {extension: '.css'}))
+        .pipe(sass({includePaths:config.bower}).on('error', sass.logError))
+        .pipe(gulp.dest(config.cssDir)),
         gulp.src(config.bower + '**/fonts/**/*.{woff,woff2,svg,ttf,eot,otf}')
-            .pipe(plumber({errorHandler: handleErrors}))
-            .pipe(changed(config.app + 'content/fonts'))
-            .pipe(flatten())
-            .pipe(gulp.dest(config.app + 'content/fonts'))
+        .pipe(plumber({errorHandler: handleErrors}))
+        .pipe(changed(config.app + 'content/fonts'))
+        .pipe(flatten())
+        .pipe(gulp.dest(config.app + 'content/fonts'))
     );
 });
 
@@ -134,64 +133,17 @@ gulp.task('inject:vendor', function () {
 
     return es.merge(stream, gulp.src(config.sassVendor)
         .pipe(plumber({errorHandler: handleErrors}))
-        .pipe(inject(gulp.src(bowerFiles({filter: ['**/*.{scss,sass}', '!/bootstrap-sass/assets/stylesheets/']}), {read: false}), {
-            //.pipe(inject(gulp.src(bowerFiles({filter:['**/*.{scss,sass}']}), {read: false}), {
+        .pipe(inject(gulp.src(bowerFiles({filter:['**/*.{scss,sass}']}), {read: false}), {
             name: 'bower',
             relative: true
         }))
         .pipe(gulp.dest(config.scss)));
 });
 
-var bowerTest = {
-    overrides: {
-        "angular-substance-editor": {
-            "main": [
-                "dist/css/angular-substance-editor.css"
-            ]
-        }
-    }
-};
 gulp.task('inject:test', function () {
     return gulp.src(config.test + 'karma.conf.js')
         .pipe(plumber({errorHandler: handleErrors}))
-        .pipe(inject(gulp.src(bowerFiles(
-            {
-                includeDev: true,
-                filter: ['**/*.js'],
-                "overrides": {
-                    "angular": {
-                        "dependencies": {
-                            "jquery": "2.2.4"
-                        }
-                    },
-                    "angular-cache-buster": {
-                        "dependencies": {
-                            "angular": "1.5.5"
-                        }
-                    },
-                    "angular-dynamic-locale": {
-                        "dependencies": {
-                            "angular": "1.5.5"
-                        }
-                    },
-                    "angular-substance-editor": {
-                        "main": [
-                            "../../../../test/javascript/mock/angular-substance-editor-mock.js",
-                            "dist/css/angular-substance-editor.css"
-                        ]
-                    },
-                    "bootstrap-sass": {
-                        "main": [
-                            "../bootswatch/simplex/_variables.scss",
-                            "assets/stylesheets/_bootstrap.scss",
-                            "../bootswatch/simplex/_bootswatch.scss"
-                        ]
-                    }
-                }
-            }),
-            {
-                read: false
-            }), {
+        .pipe(inject(gulp.src(bowerFiles({includeDev: true, filter: ['**/*.js']}), {read: false}), {
             starttag: '// bower:js',
             endtag: '// endbower',
             transform: function (filepath) {
@@ -239,8 +191,8 @@ gulp.task('ngconstant:dev', function () {
         template: config.constantTemplate,
         stream: true
     })
-        .pipe(rename('app.constants.js'))
-        .pipe(gulp.dest(config.app + 'app/'));
+    .pipe(rename('app.constants.js'))
+    .pipe(gulp.dest(config.app + 'app/'));
 });
 
 gulp.task('ngconstant:prod', function () {
@@ -253,8 +205,8 @@ gulp.task('ngconstant:prod', function () {
         template: config.constantTemplate,
         stream: true
     })
-        .pipe(rename('app.constants.js'))
-        .pipe(gulp.dest(config.app + 'app/'));
+    .pipe(rename('app.constants.js'))
+    .pipe(gulp.dest(config.app + 'app/'));
 });
 
 // check app for eslint errors

@@ -1,15 +1,12 @@
 {
     "global": {
-        "title": "RtS",
+        "title": "Rts",
         "browsehappy": "Sie benutzen einen <strong>veralteten</strong> Browser. Bitte <a href=\"http://browsehappy.com/?locale=de/\">aktualisieren Sie Ihren Browser</a>, um die Benutzerfreundlichkeit zu erhöhen.",
         "menu": {
             "home": "Startseite",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entitäten",
-                "author": "Author",
-                "content": "Content",
-                "stuff": "Stuff",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -75,10 +72,10 @@
             }
         },
         "field": {
-            "id": "ID"
+            "id" : "ID"
         },
         "ribbon": {
-            "dev": "Development"
+            "dev":"Development"
         }
     },
     "entity": {
@@ -122,11 +119,5 @@
         "emailexists": "E-mail wird bereits verwendet!",
         "idexists": "Ein neuer {{entityName}} kann noch keine ID haben"
     },
-    "footer": {
-        "privacy": "Privacy",
-        "impressum": "Impressum"
-    },
-    "bootswatch": {
-        "themeSelector": "Theme"
-    }
+    "footer": "Dies ist Ihre Fußzeile"
 }
