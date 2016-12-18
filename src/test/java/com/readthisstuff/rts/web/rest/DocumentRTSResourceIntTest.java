@@ -9,9 +9,13 @@ import com.readthisstuff.rts.domain.enumeration.ContentType;
 import com.readthisstuff.rts.repository.AuthorRepository;
 import com.readthisstuff.rts.repository.DocumentRTSRepository;
 import com.readthisstuff.rts.service.AuthorService;
+import com.readthisstuff.rts.service.DocumentRTSService;
+import com.readthisstuff.rts.service.util.ImageService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.AdditionalMatchers;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
@@ -28,6 +32,7 @@ import org.springframework.util.Base64Utils;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -35,6 +40,8 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.AdditionalAnswers.returnsFirstArg;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -66,7 +73,7 @@ public class DocumentRTSResourceIntTest {
     private static final ContentType DEFAULT_TYPE = ContentType.ARTICLE;
     private static final ContentType UPDATED_TYPE = ContentType.INTERVIEW;
 
-    private static final byte[] DEFAULT_THUMP = TestUtil.createByteArray(1, "0");
+    private static final byte[] DEFAULT_THUMP = TestUtil.createByteArray(3, "010101");
     private static final byte[] UPDATED_THUMP = TestUtil.createByteArray(2, "1");
     private static final String DEFAULT_THUMP_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_THUMP_CONTENT_TYPE = "image/png";
@@ -88,7 +95,14 @@ public class DocumentRTSResourceIntTest {
     private AuthorRepository authorRepository;
 
     @Mock
+    private ImageService mockImageService;
+
+    @Mock
     private AuthorService mockAuthorService;
+
+
+    @Inject
+    private DocumentRTSService documentRTSService;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -101,10 +115,12 @@ public class DocumentRTSResourceIntTest {
     private DocumentRTS documentRTS;
 
     @PostConstruct
-    public void setup() {
+    public void setup() throws IOException {
         MockitoAnnotations.initMocks(this);
         DEFAULT_AUTHOR.setUserName(DEFAULT_AUTHOR_NAME);
         when(mockAuthorService.createCurrentUserAsAuthor()).thenReturn(DEFAULT_AUTHOR);
+
+        when(mockImageService.resizeThumb(any(byte[].class),anyInt(),anyInt(),anyString())).then(returnsFirstArg());
 
         DEFAULT_CONTENT = createContent(DEFAULT_CONTENT_ID, DEFAULT_CONTENT_CONTENT);
         UPDATED_CONTENT = createContent(UPDATED_CONTENT_ID, UPDATED_CONTENT_CONTENT);
@@ -112,8 +128,11 @@ public class DocumentRTSResourceIntTest {
 
         DocumentRTSResource documentRTSResource = new DocumentRTSResource();
 
+        ReflectionTestUtils.setField(documentRTSService, "authorService", mockAuthorService);
+        ReflectionTestUtils.setField(documentRTSService, "imageService", mockImageService);
+
         ReflectionTestUtils.setField(documentRTSResource, "documentRTSRepository", documentRTSRepository);
-        ReflectionTestUtils.setField(documentRTSResource, "authorService", mockAuthorService);
+        ReflectionTestUtils.setField(documentRTSResource, "documentRTSService", documentRTSService);
 
 
         this.restDocumentRTSMockMvc = MockMvcBuilders.standaloneSetup(documentRTSResource)
