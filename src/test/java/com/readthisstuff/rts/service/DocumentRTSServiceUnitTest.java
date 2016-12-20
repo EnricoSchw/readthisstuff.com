@@ -45,7 +45,6 @@ import static org.mockito.Mockito.when;
 @SpringApplicationConfiguration(classes = RtsApp.class)
 public class DocumentRTSServiceUnitTest {
 
-
     private static final String AUTHOR_ID = "author_id";
     private static final byte[] DEFAULT_THUMP = TestUtil.createByteArray(1, "0");
     private static final String DEFAULT_THUMP_CONTENT_TYPE = "image/jpg";
