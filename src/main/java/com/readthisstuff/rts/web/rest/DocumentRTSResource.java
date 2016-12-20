@@ -1,13 +1,10 @@
 package com.readthisstuff.rts.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.readthisstuff.rts.domain.Author;
 import com.readthisstuff.rts.domain.DocumentRTS;
 import com.readthisstuff.rts.repository.DocumentRTSRepository;
-import com.readthisstuff.rts.service.AuthorService;
 import com.readthisstuff.rts.service.DocumentRTSService;
-import com.readthisstuff.rts.service.util.ImageService;
-import com.readthisstuff.rts.web.rest.dto.document.PublishDTO;
+import com.readthisstuff.rts.web.rest.dto.document.DocumentPublishDTO;
 import com.readthisstuff.rts.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -149,28 +145,20 @@ public class DocumentRTSResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> publishDocumentRTS( @Valid @RequestBody PublishDTO documentRTSPublish) {
+    public ResponseEntity<DocumentRTS> publishDocumentRTS(@Valid @RequestBody DocumentPublishDTO documentRTSPublish) {
         log.debug("REST request to delete DocumentRTS : {}", documentRTSPublish.getId());
+
         DocumentRTS documentRTS = documentRTSRepository.findOne(documentRTSPublish.getId());
 
-        return null;
-
-
-
-//        return Optional.ofNullable(documentRTS)
-//            .filer(documentRT->
-//                documentRT.setIsPublic(documentRTSPublish.getIstPublish())
-//                )
-//            .map(document ->
-//                documentRTSRepository.save(document);
-//            ).map(result -> new ResponseEntity<>(
-//                result,
-//                HttpStatus.OK))
-//            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-//
-//        DocumentRTS result = saveDocument(documentRTS);
-//        return ResponseEntity.ok()
-//            .headers(HeaderUtil.createEntityUpdateAlert("documentRTS", documentRTS.getId().toString()))
-//            .body(result);
+        if(documentRTS !=  null) {
+            DocumentRTS result = documentRTSService.publishDocument(documentRTS,documentRTSPublish.getPublished());
+            return new ResponseEntity<>(
+                result,
+                HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+
+
 }

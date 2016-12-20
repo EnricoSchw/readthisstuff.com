@@ -32,6 +32,7 @@ import java.util.Set;
 
 import static com.readthisstuff.rts.helper.creator.DocumentRTSCreator.createDocument;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -79,6 +80,23 @@ public class DocumentRTSServiceUnitTest {
 
         verify(authorService,times(1)).createCurrentUserAsAuthor();
         verify(imageService,times(1)).resizeThumb(eq(DEFAULT_THUMP), eq(THUMB_WIDTH), eq(THUMB_HEIGHT), eq(DEFAULT_THUMP_CONTENT_TYPE));
+    }
+
+    @Test
+    public void publishDocument() {
+        DocumentRTS documentRTS = createDocument("1");
+        when(documentRTSRepository.save(any(DocumentRTS.class))).then(returnsFirstArg());
+
+        // make document publish
+        DocumentRTS actualDocumentRTS = service.publishDocument(documentRTS, true);
+
+        assertThat(actualDocumentRTS.getPublished()).isTrue();
+        assertThat(actualDocumentRTS.getPublicationDate()).isEqualTo(LocalDate.now());
+
+        // make document private
+        actualDocumentRTS = service.publishDocument(documentRTS, false);
+        assertThat(actualDocumentRTS.getPublished()).isFalse();
+        assertThat(actualDocumentRTS.getPublicationDate()).isNull();
     }
 
     // #################### private helper

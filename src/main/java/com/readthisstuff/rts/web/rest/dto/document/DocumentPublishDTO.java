@@ -5,38 +5,35 @@ import com.readthisstuff.rts.domain.DocumentRTS;
 
 import javax.validation.constraints.NotNull;
 
-/**
- * Created by enrico on 16.12.16.
- */
-public class PublishDTO {
+public class DocumentPublishDTO {
 
 
     @NotNull
-    private Boolean istPublish;
+    private Boolean published;
 
     @NotNull
     private String id;
 
-    public PublishDTO(DocumentRTS documentRTS) {
-        this.istPublish = documentRTS.getIsPublic();
+    public DocumentPublishDTO(DocumentRTS documentRTS) {
+        this.published = documentRTS.getPublished();
         this.id = documentRTS.getId();
     }
 
-    public PublishDTO(String id, Boolean istPublish) {
-        this.istPublish = istPublish;
+    public DocumentPublishDTO(String id, Boolean published) {
+        this.published = published;
         this.id = id;
     }
 
     @JsonCreator
-    public PublishDTO() {
+    public DocumentPublishDTO() {
     }
 
-    public Boolean getIstPublish() {
-        return istPublish;
+    public Boolean getPublished() {
+        return published;
     }
 
-    public void setIstPublish(Boolean istPublish) {
-        this.istPublish = istPublish;
+    public void setPublished(Boolean published) {
+        this.published = published;
     }
 
     public String getId() {
@@ -49,8 +46,8 @@ public class PublishDTO {
 
     @Override
     public String toString() {
-        return "PublishDTO{" +
-            "istPublish='" + istPublish + '\'' +
+        return "DocumentPublishDTO{" +
+            "published='" + published + '\'' +
             ", id='" + id + '\'' +
             '}';
     }

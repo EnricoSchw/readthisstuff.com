@@ -115,7 +115,7 @@ public class DocumentStuffResourceIntTest {
         documentRTS.setThumpContentType(DEFAULT_THUMP_CONTENT_TYPE);
 
         documentRTS.setPublicationDate(DEFAULT_PUBLICATION_DATE);
-        documentRTS.setIsPublic(DEFAULT_IS_PUBLIC);
+        documentRTS.setPublished(DEFAULT_IS_PUBLIC);
         documentRTS.setClicks(DEFAULT_CLICKS);
     }
 

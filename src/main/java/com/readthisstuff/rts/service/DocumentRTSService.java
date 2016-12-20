@@ -5,13 +5,13 @@ import com.readthisstuff.rts.domain.Author;
 import com.readthisstuff.rts.domain.DocumentRTS;
 import com.readthisstuff.rts.repository.DocumentRTSRepository;
 import com.readthisstuff.rts.service.util.ImageService;
-import com.readthisstuff.rts.web.rest.DocumentRTSResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.time.LocalDate;
 
 @Service
 public class DocumentRTSService {
@@ -36,6 +36,18 @@ public class DocumentRTSService {
 
         byte[] img = optimizeThumb(doc.getThump(), doc.getThumpContentType());
         doc.setThump(img);
+        return documentRTSRepository.save(doc);
+    }
+
+    public DocumentRTS publishDocument(DocumentRTS doc, boolean isPublish) {
+        doc.setPublished(isPublish);
+
+        if (isPublish) {
+            doc.setPublicationDate(LocalDate.now());
+        } else {
+            doc.setPublicationDate(null);
+        }
+
         return documentRTSRepository.save(doc);
     }
 

@@ -51,8 +51,8 @@ public class DocumentRTS implements Serializable {
     @Field("publication_date")
     private LocalDate publicationDate;
 
-    @Field("is_public")
-    private Boolean isPublic;
+    @Field("published")
+    private Boolean published;
 
     //Min(value = 0)
     @Field("clicks")
@@ -124,11 +124,11 @@ public class DocumentRTS implements Serializable {
     }
 
     public Boolean isIsPublic() {
-        return isPublic;
+        return published;
     }
 
-    public void setIsPublic(Boolean isPublic) {
-        this.isPublic = isPublic;
+    public void setPublished(Boolean isPublic) {
+        this.published = isPublic;
     }
 
     public Integer getClicks() {
@@ -170,12 +170,12 @@ public class DocumentRTS implements Serializable {
                 ", thump='" + thump + "'" +
                 ", thumpContentType='" + thumpContentType + "'" +
                 ", publicationDate='" + publicationDate + "'" +
-                ", isPublic='" + isPublic + "'" +
+                ", published='" + published + "'" +
                 ", clicks='" + clicks + "'" +
                 '}';
     }
 
-    public Boolean getIsPublic() {
-        return isPublic;
+    public Boolean getPublished() {
+        return published;
     }
 }

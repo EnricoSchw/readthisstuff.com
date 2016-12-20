@@ -11,11 +11,10 @@ import com.readthisstuff.rts.repository.DocumentRTSRepository;
 import com.readthisstuff.rts.service.AuthorService;
 import com.readthisstuff.rts.service.DocumentRTSService;
 import com.readthisstuff.rts.service.util.ImageService;
+import com.readthisstuff.rts.web.rest.dto.document.DocumentPublishDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.AdditionalMatchers;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
@@ -165,7 +164,7 @@ public class DocumentRTSResourceIntTest {
         documentRTS.setThumpContentType(DEFAULT_THUMP_CONTENT_TYPE);
 
         documentRTS.setPublicationDate(DEFAULT_PUBLICATION_DATE);
-        documentRTS.setIsPublic(DEFAULT_IS_PUBLIC);
+        documentRTS.setPublished(DEFAULT_IS_PUBLIC);
         documentRTS.setClicks(DEFAULT_CLICKS);
     }
 
@@ -358,7 +357,7 @@ public class DocumentRTSResourceIntTest {
         updatedDocumentRTS.setThump(UPDATED_THUMP);
         updatedDocumentRTS.setThumpContentType(UPDATED_THUMP_CONTENT_TYPE);
         updatedDocumentRTS.setPublicationDate(UPDATED_PUBLICATION_DATE);
-        updatedDocumentRTS.setIsPublic(UPDATED_IS_PUBLIC);
+        updatedDocumentRTS.setPublished(UPDATED_IS_PUBLIC);
         updatedDocumentRTS.setClicks(UPDATED_CLICKS);
 
         restDocumentRTSMockMvc.perform(put("/api/document-rts")
@@ -405,19 +404,23 @@ public class DocumentRTSResourceIntTest {
 
     @Test
     public void publishDocumentRTS() throws Exception {
-        documentRTSRepository.save(documentRTS);
+        DocumentRTS savedDoc = documentRTSRepository.save(documentRTS);
         int databaseSizeBeforeUpdate = documentRTSRepository.findAll().size();
 
-        // Get the documentRTS
-        restDocumentRTSMockMvc.perform(put("/api/document-rts/{id}/publish", documentRTS.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+        DocumentPublishDTO docPublish = new DocumentPublishDTO(savedDoc.getId(), true);
+
+
+        // publish the documentRTS
+        restDocumentRTSMockMvc.perform(put("/api/document-rts/publish")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(docPublish)))
             .andExpect(status().isOk());
 
         // Validate the database size not change
-        List<DocumentRTS> documentRTS = documentRTSRepository.findAll();
-        assertThat(documentRTS).hasSize(databaseSizeBeforeUpdate);
+        List<DocumentRTS> documentRTSList = documentRTSRepository.findAll();
+        assertThat(documentRTSList).hasSize(databaseSizeBeforeUpdate);
 
-        DocumentRTS testDocumentRTS = documentRTS.get(documentRTS.size() - 1);
-
+        DocumentRTS testDocumentRTS = documentRTSList.get(documentRTSList.size() - 1);
+        assertThat(testDocumentRTS.getPublished()).isTrue();
     }
 }
