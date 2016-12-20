@@ -22,7 +22,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -67,14 +69,13 @@ public class DocumentRTSServiceUnitTest {
         MockitoAnnotations.initMocks(this);
         when(authorService.createCurrentUserAsAuthor()).thenReturn(createMockAuthor());
         when(imageService.resizeThumb(any(), anyInt(),anyInt(), anyString())).thenReturn(DEFAULT_THUMP);
-
     }
 
     @Test
     public void saveDocument() throws IOException {
         DocumentRTS documentRTS = createDocument("1");
 
-        when(documentRTSRepository.save(any(DocumentRTS.class))).thenReturn(documentRTS);
+        when(documentRTSRepository.save(any(DocumentRTS.class))).then(returnsFirstArg());
         DocumentRTS actualDocumentRTS = service.saveDocument(documentRTS);
         assertThat(actualDocumentRTS.getAuthor().getId()).isEqualTo(AUTHOR_ID);
 
