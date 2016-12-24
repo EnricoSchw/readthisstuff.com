@@ -3,6 +3,7 @@ package com.readthisstuff.rts.service;
 
 import com.google.common.collect.Sets;
 import com.readthisstuff.rts.RtsApp;
+import com.readthisstuff.rts.config.CacheConfiguration;
 import com.readthisstuff.rts.domain.Author;
 import com.readthisstuff.rts.domain.Content;
 import com.readthisstuff.rts.domain.DocumentRTS;
@@ -17,10 +18,12 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
@@ -42,7 +45,7 @@ import static org.mockito.Mockito.when;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = RtsApp.class)
+@ContextConfiguration(classes = CacheConfiguration.class)
 public class DocumentRTSServiceUnitTest {
 
     private static final String AUTHOR_ID = "author_id";
