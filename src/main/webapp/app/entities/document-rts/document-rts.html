@@ -73,11 +73,7 @@
 
                 <td>{{documentRTS.title}}</td>
                 <td>{{documentRTS.author.userName}}</td>
-                <td>
-                    <switcher class="checkbox-switcher" ng-model=documentRTS.published
-                              ng-change="vm.onPublicChange(newValue, oldValue, documentRTS)"
-                    </switcher>
-
+                <td><switcher class="checkbox-switcher"  ng-model=documentRTS.published ng-change="vm.onPublicChange(newValue, oldValue, documentRTS)" ></switcher>
                 </td>
 
                 <td class="text-right">
