@@ -23,8 +23,10 @@
             });
         }
 
-        function onPublicChange(newValue, oldValue, id) {
-            console.log('Switch:', newValue, oldValue, id);
+        function onPublicChange(newValue, oldValue, document) {
+            document.published=newValue;
+            console.log('ID:', vm.documentRTS[0].id,'Published:', vm.documentRTS[0].published);
+            DocumentRTS.publish(document);
         }
 
     }

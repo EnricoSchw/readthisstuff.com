@@ -1,14 +1,9 @@
 package com.readthisstuff.rts.service;
 
 
-import com.google.common.collect.Sets;
-import com.readthisstuff.rts.RtsApp;
 import com.readthisstuff.rts.config.CacheConfiguration;
 import com.readthisstuff.rts.domain.Author;
-import com.readthisstuff.rts.domain.Content;
 import com.readthisstuff.rts.domain.DocumentRTS;
-import com.readthisstuff.rts.domain.DocumentStuff;
-import com.readthisstuff.rts.domain.enumeration.ContentType;
 import com.readthisstuff.rts.repository.DocumentRTSRepository;
 import com.readthisstuff.rts.service.util.ImageService;
 import com.readthisstuff.rts.web.rest.TestUtil;
@@ -18,30 +13,20 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 import static com.readthisstuff.rts.helper.creator.DocumentRTSCreator.createDocument;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)

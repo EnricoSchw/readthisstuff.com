@@ -74,12 +74,8 @@
                 <td>{{documentRTS.title}}</td>
                 <td>{{documentRTS.author.userName}}</td>
                 <td>
-                    <switcher class="checkbox-switcher"
-                              ng-model="style"
-                              ng-disabled="isDisabled"
-                              ng-change="vm.onPublicChange(newValue, oldValue, documentRTS.id)"
-                              true-label="<img src='content/images/checkbox-switcher/lock-open.png' style='max-height: 0px;'>"
-                              false-label="<img src='content/images/checkbox-switcher/lock-close.png' style='max-height: 0px;'>">
+                    <switcher class="checkbox-switcher" ng-model=documentRTS.published
+                              ng-change="vm.onPublicChange(newValue, oldValue, documentRTS)"
                     </switcher>
 
                 </td>
