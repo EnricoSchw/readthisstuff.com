@@ -20,7 +20,20 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': { method:'PUT' },
+            'publish': {
+                method: 'PUT' ,
+                url : 'api/document-rts/publish',
+                transformRequest: function (data) {
+                    // modify data then
+                    return angular.toJson(
+                        {
+                            'id': data.id,
+                            'published': data.published
+                        }
+                    );
+                }
+            }
         });
     }
 })();

@@ -9,6 +9,9 @@ import com.readthisstuff.rts.domain.enumeration.ContentType;
 import com.readthisstuff.rts.repository.AuthorRepository;
 import com.readthisstuff.rts.repository.DocumentRTSRepository;
 import com.readthisstuff.rts.service.AuthorService;
+import com.readthisstuff.rts.service.DocumentRTSService;
+import com.readthisstuff.rts.service.util.ImageService;
+import com.readthisstuff.rts.web.rest.dto.document.DocumentPublishDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +31,7 @@ import org.springframework.util.Base64Utils;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -35,6 +39,8 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.AdditionalAnswers.returnsFirstArg;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -66,7 +72,7 @@ public class DocumentRTSResourceIntTest {
     private static final ContentType DEFAULT_TYPE = ContentType.ARTICLE;
     private static final ContentType UPDATED_TYPE = ContentType.INTERVIEW;
 
-    private static final byte[] DEFAULT_THUMP = TestUtil.createByteArray(1, "0");
+    private static final byte[] DEFAULT_THUMP = TestUtil.createByteArray(3, "010101");
     private static final byte[] UPDATED_THUMP = TestUtil.createByteArray(2, "1");
     private static final String DEFAULT_THUMP_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_THUMP_CONTENT_TYPE = "image/png";
@@ -88,7 +94,14 @@ public class DocumentRTSResourceIntTest {
     private AuthorRepository authorRepository;
 
     @Mock
+    private ImageService mockImageService;
+
+    @Mock
     private AuthorService mockAuthorService;
+
+
+    @Inject
+    private DocumentRTSService documentRTSService;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -101,10 +114,12 @@ public class DocumentRTSResourceIntTest {
     private DocumentRTS documentRTS;
 
     @PostConstruct
-    public void setup() {
+    public void setup() throws IOException {
         MockitoAnnotations.initMocks(this);
         DEFAULT_AUTHOR.setUserName(DEFAULT_AUTHOR_NAME);
         when(mockAuthorService.createCurrentUserAsAuthor()).thenReturn(DEFAULT_AUTHOR);
+
+        when(mockImageService.resizeThumb(any(byte[].class),anyInt(),anyInt(),anyString())).then(returnsFirstArg());
 
         DEFAULT_CONTENT = createContent(DEFAULT_CONTENT_ID, DEFAULT_CONTENT_CONTENT);
         UPDATED_CONTENT = createContent(UPDATED_CONTENT_ID, UPDATED_CONTENT_CONTENT);
@@ -112,8 +127,11 @@ public class DocumentRTSResourceIntTest {
 
         DocumentRTSResource documentRTSResource = new DocumentRTSResource();
 
+        ReflectionTestUtils.setField(documentRTSService, "authorService", mockAuthorService);
+        ReflectionTestUtils.setField(documentRTSService, "imageService", mockImageService);
+
         ReflectionTestUtils.setField(documentRTSResource, "documentRTSRepository", documentRTSRepository);
-        ReflectionTestUtils.setField(documentRTSResource, "authorService", mockAuthorService);
+        ReflectionTestUtils.setField(documentRTSResource, "documentRTSService", documentRTSService);
 
 
         this.restDocumentRTSMockMvc = MockMvcBuilders.standaloneSetup(documentRTSResource)
@@ -146,7 +164,7 @@ public class DocumentRTSResourceIntTest {
         documentRTS.setThumpContentType(DEFAULT_THUMP_CONTENT_TYPE);
 
         documentRTS.setPublicationDate(DEFAULT_PUBLICATION_DATE);
-        documentRTS.setIsPublic(DEFAULT_IS_PUBLIC);
+        documentRTS.setPublished(DEFAULT_IS_PUBLIC);
         documentRTS.setClicks(DEFAULT_CLICKS);
     }
 
@@ -339,7 +357,7 @@ public class DocumentRTSResourceIntTest {
         updatedDocumentRTS.setThump(UPDATED_THUMP);
         updatedDocumentRTS.setThumpContentType(UPDATED_THUMP_CONTENT_TYPE);
         updatedDocumentRTS.setPublicationDate(UPDATED_PUBLICATION_DATE);
-        updatedDocumentRTS.setIsPublic(UPDATED_IS_PUBLIC);
+        updatedDocumentRTS.setPublished(UPDATED_IS_PUBLIC);
         updatedDocumentRTS.setClicks(UPDATED_CLICKS);
 
         restDocumentRTSMockMvc.perform(put("/api/document-rts")
@@ -382,5 +400,27 @@ public class DocumentRTSResourceIntTest {
         // Validate the database is empty
         List<DocumentRTS> documentRTS = documentRTSRepository.findAll();
         assertThat(documentRTS).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    public void publishDocumentRTS() throws Exception {
+        DocumentRTS savedDoc = documentRTSRepository.save(documentRTS);
+        int databaseSizeBeforeUpdate = documentRTSRepository.findAll().size();
+
+        DocumentPublishDTO docPublish = new DocumentPublishDTO(savedDoc.getId(), true);
+
+
+        // publish the documentRTS
+        restDocumentRTSMockMvc.perform(put("/api/document-rts/publish")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(docPublish)))
+            .andExpect(status().isOk());
+
+        // Validate the database size not change
+        List<DocumentRTS> documentRTSList = documentRTSRepository.findAll();
+        assertThat(documentRTSList).hasSize(databaseSizeBeforeUpdate);
+
+        DocumentRTS testDocumentRTS = documentRTSList.get(documentRTSList.size() - 1);
+        assertThat(testDocumentRTS.getPublished()).isTrue();
     }
 }

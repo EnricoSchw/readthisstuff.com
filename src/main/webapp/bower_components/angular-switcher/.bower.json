@@ -1,0 +1,41 @@
+{
+  "name": "angular-switcher",
+  "version": "0.2.7",
+  "authors": [
+    "Indri Muska <indrimuska@gmail.com>"
+  ],
+  "description": "Angular Switcher is an AngularJS directive that models toggle switches.",
+  "main": [
+    "./dist/angular-switcher.min.js",
+    "./dist/angular-switcher.min.css"
+  ],
+  "keywords": [
+    "switcher",
+    "switches",
+    "toggle",
+    "checkbox",
+    "angular"
+  ],
+  "license": "MIT",
+  "homepage": "http://indrimuska.github.io/angular-switcher",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.3",
+    "jquery": "~1.7.1"
+  },
+  "_release": "0.2.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.7",
+    "commit": "28c6b3439841b0db909a4c823b4be59ac05acb3f"
+  },
+  "_source": "https://github.com/indrimuska/angular-switcher.git",
+  "_target": "^0.2.7",
+  "_originalSource": "angular-switcher"
+}

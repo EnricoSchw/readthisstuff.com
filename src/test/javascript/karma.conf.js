@@ -48,6 +48,7 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/ng-file-upload/ng-file-upload.js',
             'src/main/webapp/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
             'src/test/javascript/mock/angular-substance-editor-mock.js',
+            'src/main/webapp/bower_components/angular-switcher/dist/angular-switcher.min.js',
             'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',
             // endbower
             'src/main/webapp/app/app.module.js',

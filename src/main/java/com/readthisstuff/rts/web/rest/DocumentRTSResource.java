@@ -1,11 +1,10 @@
 package com.readthisstuff.rts.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.readthisstuff.rts.domain.Author;
 import com.readthisstuff.rts.domain.DocumentRTS;
 import com.readthisstuff.rts.repository.DocumentRTSRepository;
-import com.readthisstuff.rts.service.AuthorService;
-import com.readthisstuff.rts.service.util.ImageService;
+import com.readthisstuff.rts.service.DocumentRTSService;
+import com.readthisstuff.rts.web.rest.dto.document.DocumentPublishDTO;
 import com.readthisstuff.rts.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -35,11 +33,7 @@ public class DocumentRTSResource {
     private DocumentRTSRepository documentRTSRepository;
 
     @Inject
-    private AuthorService authorService;
-
-    @Inject
-    private ImageService imageService;
-
+    private DocumentRTSService documentRTSService;
 
     /**
      * POST  /document-rts : Create a new documentRTS.
@@ -58,7 +52,7 @@ public class DocumentRTSResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("documentRTS", "idexists", "A new documentRTS cannot already have an ID")).body(null);
         }
 
-        DocumentRTS result = saveDocument(documentRTS);
+        DocumentRTS result = documentRTSService.saveDocument(documentRTS);
         return ResponseEntity.created(new URI("/api/document-rts/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("documentRTS", result.getId().toString()))
                 .body(result);
@@ -82,30 +76,12 @@ public class DocumentRTSResource {
         if (documentRTS.getId() == null) {
             return createDocumentRTS(documentRTS);
         }
-        DocumentRTS result = saveDocument(documentRTS);
+        DocumentRTS result = documentRTSService.saveDocument(documentRTS);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("documentRTS", documentRTS.getId().toString()))
                 .body(result);
     }
 
-
-    private DocumentRTS saveDocument(DocumentRTS doc) {
-        Author author = authorService.createCurrentUserAsAuthor();
-        doc.setAuthor(author);
-
-        byte[] img = optimizeThumb(doc.getThump(), doc.getThumpContentType());
-        doc.setThump(img);
-        return documentRTSRepository.save(doc);
-    }
-
-    private byte[] optimizeThumb(final byte[] img, final String imgType) {
-        try {
-            return imageService.resizeThumb(img, 700, 400, imgType);
-        } catch (IOException e) {
-            log.debug("Optimize Thumb something goes wrong: {}", e);
-        }
-        return img;
-    }
 
 
     /**
@@ -158,5 +134,31 @@ public class DocumentRTSResource {
         documentRTSRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("documentRTS", id.toString())).build();
     }
+
+    /**
+     * DELETE  /document-rts/:id : delete the "id" documentRTS.
+     *
+     * @param documentRTSPublish the id of the documentRTS to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @RequestMapping(value = "/document-rts/publish",
+        method = RequestMethod.PUT,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<DocumentRTS> publishDocumentRTS(@Valid @RequestBody DocumentPublishDTO documentRTSPublish) {
+        log.debug("REST request to delete DocumentRTS : {}", documentRTSPublish.getId());
+
+        DocumentRTS documentRTS = documentRTSRepository.findOne(documentRTSPublish.getId());
+
+        if(documentRTS !=  null) {
+            DocumentRTS result = documentRTSService.publishDocument(documentRTS,documentRTSPublish.getPublished());
+            return new ResponseEntity<>(
+                result,
+                HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 }
