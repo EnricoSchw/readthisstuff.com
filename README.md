@@ -1,5 +1,6 @@
 # rts
-This application was generated using JHipster 4.0.8, you can find documentation and help at [https://jhipster.github.io/documentation-archive/v4.0.8](https://jhipster.github.io/documentation-archive/v4.0.8).
+
+[![Build Status](https://travis-ci.org/EnricoSchw/readthisstuff.com.svg?branch=master)](https://travis-ci.org/EnricoSchw/readthisstuff.com)
 
 ## Development
 

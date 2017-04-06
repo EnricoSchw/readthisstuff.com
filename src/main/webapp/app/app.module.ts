@@ -1,7 +1,10 @@
 import './vendor.ts';
+import 'hammerjs';
+
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { Ng2Webstorage } from 'ng2-webstorage';
 
@@ -14,6 +17,7 @@ import { RtsEntityModule } from './entities/entity.module';
 import { LayoutRoutingModule } from './layouts';
 import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
+
 
 import {
     JhiMainComponent,
@@ -30,6 +34,7 @@ import {
     imports: [
         BrowserModule,
         LayoutRoutingModule,
+        MaterialModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
         RtsSharedModule,
         RtsHomeModule,
