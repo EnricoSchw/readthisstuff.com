@@ -51,8 +51,8 @@ describe('Component Tests', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(SettingsComponent);
             comp = fixture.componentInstance;
-            mockAuth = fixture.debugElement.injector.get(AccountService);
-            mockPrincipal = fixture.debugElement.injector.get(Principal);
+            //mockAuth = fixture.debugElement.injector.get(AccountService);
+            //mockPrincipal = fixture.debugElement.injector.get(Principal);
         });
 
         it('should send the current identity upon save', function () {

@@ -4,8 +4,13 @@ import 'hammerjs';
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '@angular/material';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import { BrowserModule } from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+
+
+import {MaterialModule, MdButtonModule, MdSidenavModule} from '@angular/material';
 import { Ng2Webstorage } from 'ng2-webstorage';
 
 import { RtsSharedModule, UserRouteAccessService } from './shared';
@@ -22,6 +27,7 @@ import { PaginationConfig } from './blocks/config/uib-pagination.config';
 import {
     JhiMainComponent,
     NavbarComponent,
+    SidenaveComponent,
     FooterComponent,
     ProfileService,
     PageRibbonComponent,
@@ -34,17 +40,20 @@ import {
     imports: [
         BrowserModule,
         LayoutRoutingModule,
-        MaterialModule,
+        BrowserModule,
+        BrowserAnimationsModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
         RtsSharedModule,
         RtsHomeModule,
         RtsAdminModule,
         RtsAccountModule,
-        RtsEntityModule
+        RtsEntityModule,
+        MaterialModule,MdButtonModule, MdSidenavModule
     ],
     declarations: [
         JhiMainComponent,
         NavbarComponent,
+        SidenaveComponent,
         ErrorComponent,
         PageRibbonComponent,
         ActiveMenuDirective,
