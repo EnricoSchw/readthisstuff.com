@@ -4,13 +4,12 @@ import 'hammerjs';
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 
-import {MaterialModule, MdButtonModule, MdSidenavModule} from '@angular/material';
+import {MaterialModule, MdButtonModule, MdToolbarModule,MdSidenavModule, MdMenuModule, MdIconModule} from '@angular/material';
 import { Ng2Webstorage } from 'ng2-webstorage';
 
 import { RtsSharedModule, UserRouteAccessService } from './shared';
@@ -48,7 +47,7 @@ import {
         RtsAdminModule,
         RtsAccountModule,
         RtsEntityModule,
-        MaterialModule,MdButtonModule, MdSidenavModule
+        MdToolbarModule, MdMenuModule,MdButtonModule, MdSidenavModule, MdIconModule
     ],
     declarations: [
         JhiMainComponent,

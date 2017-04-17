@@ -18,7 +18,9 @@
       "prefix": "jhi",
       "mobile": false,
       "styles": [
-        "content/css/main.css"
+        "content/css/main.css",
+          "content/css/material-design-icons.css"
+
       ],
       "scripts": [],
       "environments": {}

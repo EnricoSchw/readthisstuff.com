@@ -1,11 +1,103 @@
+@import './src/main/webapp/content/scss/_variables.scss';
 
 /* ==========================================================================
 Navbar
 ========================================================================== */
+.navbar {
+    --font-family-code: Consolas,'Liberation Mono',Menlo,Courier,monospace;
+    --font-size-code: 14px;
+    font-weight: normal;
+    font-size: 100%;
+    font: inherit;
+    -webkit-font-smoothing: antialiased;
+    color: $rts-font;
+
+    .logo {
+        padding: 5px 15px;
+        .logo-img {
+            height: 33px;
+            width: 33px;
+            display: inline-block;
+            vertical-align: middle;
+            background: url("../../../content/images/logo.png") no-repeat center center;
+            background-size: contain;
+        }
+    }
+
+    .fill-remaining-space {
+        // This fills the remaining space, by using flexbox.
+        // Every toolbar row uses a flexbox row layout.
+        flex: 1 1 auto;
+    }
+
+    a {
+        color: $rts-font;
+        text-decoration: none;
+    }
+
+    .nav-link {
+        padding: 0 14px;
+    }
+
+    .nav-link:hover {
+        color: $rts-base-color;
+    }
+
+    .sidebar-button {
+        display: inline-block;
+        padding: 0 14px;
+    }
+}
+
+.navbar-fill-remaining-space {
+    // This fills the remaining space, by using flexbox.
+    // Every toolbar row uses a flexbox row layout.
+    flex: 1 1 auto;
+}
+
+.navbar-icon {
+    padding: 0 14px;
+}
+
+.navbar-icon:hover {
+    color: #ffb533;
+}
+
+/* ==========================================================================
+Logo styles
+========================================================================== */
+.navbar-brand {
+    &.logo {
+        padding: 5px 15px;
+        .logo-img {
+            height: 33px;
+            width: 33px;
+            display: inline-block;
+            vertical-align: middle;
+            background: url("../../../content/images/logo.png") no-repeat center center;
+            background-size: contain;
+        }
+
+        font-weight: 400;
+        color: #777;
+    }
+}
+
+
+
+
 .navbar-version {
     font-size: 10px;
     color: #ccc
 }
+
+
+/* ========================================================================== */
+
+
+
+
+
 
 .jh-navbar {
     background-color: #353d47;
@@ -52,19 +144,3 @@ Navbar
     vertical-align: middle;
 }
 
-/* ==========================================================================
-Logo styles
-========================================================================== */
-.navbar-brand {
-    &.logo {
-        padding: 5px 15px;
-        .logo-img {
-            height: 45px;
-            width: 70px;
-            display: inline-block;
-            vertical-align: middle;
-            background: url("../../../content/images/logo-jhipster.png") no-repeat center center;
-            background-size: contain;
-        }
-    }
-}

@@ -3,6 +3,16 @@
     <router-outlet name="navbar"></router-outlet>
 </div>
 
+<md-menu #appMenu="mdMenu" yPosition="above">
+    <button md-menu-item> Settings </button>
+    <button md-menu-item> Help </button>
+</md-menu>
+
+<button md-icon-button [mdMenuTriggerFor]="appMenu">
+    <md-icon>more_vert</md-icon>
+</button>
+
+
 <md-sidenav-container class="container-fluid">
     <jhi-sidenav></jhi-sidenav>
 
