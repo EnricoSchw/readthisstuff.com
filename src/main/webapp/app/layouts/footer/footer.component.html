@@ -1,17 +1,11 @@
 <div class="footer">
-<!-- Footer -->
-<footer ng-cloak="">
-    <div class="row">
-        <div class="col-lg-11">
-            <p>Read this Stuff 2017</p>
-        </div>
-
-        <div class="col-lg-1">
-            <a ui-sref="home.privacy">Privacy</a>
-        </div>
-
-    </div>
-    <!-- /.row -->
-</footer>
+    <!-- Footer -->
+    <footer ng-cloak="">
+        <span>Read this Stuff 2017</span>
+        <!-- This fills the remaining space of the current row -->
+        <span class="fill-remaining-space"></span>
+        <a ui-sref="home.privacy" class="rts-footer-link" >Privacy</a>
+    </footer>
 </div>
 <template ngbModalContainer></template>
+

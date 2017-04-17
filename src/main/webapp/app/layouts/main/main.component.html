@@ -1,24 +1,13 @@
 <jhi-page-ribbon></jhi-page-ribbon>
-<div>
+
+<md-sidenav-container class="container-fluid content">
+    <!-- <jhi-sidenav></jhi-sidenav> -->
     <router-outlet name="navbar"></router-outlet>
-</div>
 
-<md-menu #appMenu="mdMenu" yPosition="above">
-    <button md-menu-item> Settings </button>
-    <button md-menu-item> Help </button>
-</md-menu>
-
-<button md-icon-button [mdMenuTriggerFor]="appMenu">
-    <md-icon>more_vert</md-icon>
-</button>
-
-
-<md-sidenav-container class="container-fluid">
-    <jhi-sidenav></jhi-sidenav>
-
-    <div class="card jh-card">
+    <div class="card jh-card main-content">
         <router-outlet></router-outlet>
         <router-outlet name="popup"></router-outlet>
     </div>
+
     <jhi-footer></jhi-footer>
 </md-sidenav-container>

@@ -4,6 +4,7 @@
 Navbar
 ========================================================================== */
 .navbar {
+    
     --font-family-code: Consolas,'Liberation Mono',Menlo,Courier,monospace;
     --font-size-code: 14px;
     font-weight: normal;
@@ -13,7 +14,7 @@ Navbar
     color: $rts-font;
 
     .logo {
-        padding: 5px 15px;
+        padding: 5px 0px;
         .logo-img {
             height: 33px;
             width: 33px;
@@ -36,7 +37,7 @@ Navbar
     }
 
     .nav-link {
-        padding: 0 14px;
+        padding: 0 0 0 14px ;
     }
 
     .nav-link:hover {
