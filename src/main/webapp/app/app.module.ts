@@ -3,13 +3,12 @@ import 'hammerjs';
 
 
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 
-import {MaterialModule, MdButtonModule, MdToolbarModule,MdSidenavModule, MdMenuModule, MdIconModule} from '@angular/material';
+import { MdButtonModule, MdToolbarModule,MdSidenavModule, MdMenuModule, MdIconModule} from '@angular/material';
 import { Ng2Webstorage } from 'ng2-webstorage';
 
 import { RtsSharedModule, UserRouteAccessService } from './shared';
@@ -33,6 +32,7 @@ import {
     ActiveMenuDirective,
     ErrorComponent
 } from './layouts';
+import {RtsPrivacyModule} from "./privacy/privacy.module";
 
 
 @NgModule({
@@ -47,6 +47,7 @@ import {
         RtsAdminModule,
         RtsAccountModule,
         RtsEntityModule,
+        RtsPrivacyModule,
         MdToolbarModule, MdMenuModule,MdButtonModule, MdSidenavModule, MdIconModule
     ],
     declarations: [
@@ -69,3 +70,4 @@ import {
     bootstrap: [ JhiMainComponent ]
 })
 export class RtsAppModule {}
+
