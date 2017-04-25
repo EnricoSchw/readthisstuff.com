@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RtsPrivacyRouterModule} from './privacy.router.module';
+import { RtsPrivacyRoute} from './privacy.route';
 import {CommonModule} from '@angular/common';
 import {RtsPrivacyComponent} from './privacy.component';
 
@@ -7,7 +7,7 @@ import {RtsPrivacyComponent} from './privacy.component';
 @NgModule({
     imports: [
         CommonModule,
-        RtsPrivacyRouterModule
+        RtsPrivacyRoute
     ],
     declarations: [
         RtsPrivacyComponent
