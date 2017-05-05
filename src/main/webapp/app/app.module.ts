@@ -48,7 +48,7 @@ import {RtsPrivacyModule} from "./privacy/privacy.module";
         RtsAccountModule,
         RtsEntityModule,
         RtsPrivacyModule,
-        MdToolbarModule, MdMenuModule,MdButtonModule, MdSidenavModule, MdIconModule
+        MdToolbarModule, MdMenuModule, MdButtonModule, MdSidenavModule, MdIconModule
     ],
     declarations: [
         JhiMainComponent,

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {JhiLanguageService} from "ng-jhipster";
+import {JhiLanguageService} from 'ng-jhipster';
 
 @Component({
     templateUrl: './privacy.component.html',

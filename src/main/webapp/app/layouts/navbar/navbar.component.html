@@ -1,4 +1,4 @@
-<md-toolbar class="navbar">
+<md-toolbar class="navbar" [ngSwitch]="isAuthenticated()">
 
     <span>
         <a class="logo" routerLink="/" (click)="collapseNavbar()">
@@ -11,8 +11,76 @@
     <!-- This fills the remaining space of the current row -->
     <span class="fill-remaining-space"></span>
 
+    <!-- Is authenticated as Admin-->
+    <a class="material-icons nav-link" [mdMenuTriggerFor]="adminMenu" *jhiHasAnyAuthority="'ROLE_ADMIN'">list</a>
 
-    <a class="nav-link" (click)="login()" >Write</a>
-    <a class="material-icons nav-link" (click)="login()" >person</a>
+    <!-- Is authenticated as Admin-->
+    <a class="material-icons nav-link" [mdMenuTriggerFor]="userMenu" *ngSwitchCase="true">list</a>
+
+    <!-- Write -->
+    <a class="nav-link" (click)="login()" *ngSwitchCase="false" >Write</a>
+
+    <a class="material-icons nav-link" (click)="login()" *ngSwitchCase="false" >person</a>
+    <a class="material-icons nav-link" id="logout" (click)="logout()" *ngSwitchCase="true" >person outline</a>
+
 </md-toolbar>
+
+
+
+<!-- Admin Menu -->
+<md-menu #adminMenu="mdMenu">
+    <button md-menu-item routerLink="user-management">
+        <md-icon>people</md-icon>
+        <span jhiTranslate="global.menu.admin.userManagement">User management</span>
+    </button>
+
+    <button md-menu-item routerLink="jhi-metrics">
+        <md-icon>assessment</md-icon>
+        <span jhiTranslate="global.menu.admin.metrics">Metric</span>
+    </button>
+
+    <button md-menu-item routerLink="jhi-health" routerLinkActive="active">
+        <md-icon>healing</md-icon>
+        <span jhiTranslate="global.menu.admin.health">Health</span>
+    </button>
+
+    <button md-menu-item routerLink="jhi-configuration" routerLinkActive="active">
+        <md-icon>settings applications</md-icon>
+        <span jhiTranslate="global.menu.admin.configuration">Configuration</span>
+    </button>
+
+    <button md-menu-item routerLink="audits" routerLinkActive="active">
+        <md-icon>notifications</md-icon>
+        <span jhiTranslate="global.menu.admin.audits">Audits</span>
+    </button>
+
+    <button md-menu-item routerLink="logs" routerLinkActive="active">
+        <md-icon>subject</md-icon>
+        <span jhiTranslate="global.menu.admin.logs">Logs</span>
+    </button>
+
+    <button md-menu-item *ngIf="swaggerEnabled" routerLink="docs" routerLinkActive="active" >
+        <md-icon>book</md-icon>
+        <span jhiTranslate="global.menu.admin.apidocs">API</span>
+    </button>
+</md-menu>
+
+<!-- User Menu -->
+<md-menu #userMenu="mdMenu">
+    <button md-menu-item routerLink="settings">
+        <md-icon>settings</md-icon>
+        <span jhiTranslate="global.menu.account.settings">Settings</span>
+    </button>
+
+    <button md-menu-item routerLink="password">
+        <md-icon>vpn key</md-icon>
+        <span jhiTranslate="global.menu.account.password">Password</span>
+    </button>
+
+    <button md-menu-item routerLink="sessions">
+        <md-icon>cloud</md-icon>
+        <span jhiTranslate="global.menu.account.sessions">Sessions</span>
+    </button>
+</md-menu>
+
 

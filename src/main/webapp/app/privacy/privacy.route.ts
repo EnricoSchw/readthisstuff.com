@@ -1,5 +1,5 @@
-import {Routes, RouterModule} from "@angular/router";
-import { RtsPrivacyComponent} from "./privacy.component";
+import {Routes, RouterModule} from '@angular/router';
+import { RtsPrivacyComponent} from './privacy.component';
 
 
 const PRIVACY_ROUTES: Routes = [{
